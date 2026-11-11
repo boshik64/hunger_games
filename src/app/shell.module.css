@@ -16,6 +16,10 @@
   pointer-events: none;
 }
 
+.resultStill {
+  display: none;
+}
+
 .boot,
 .screen {
   background: transparent;
@@ -383,20 +387,36 @@
 .chip {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   width: fit-content;
   max-width: 100%;
+  min-height: 68px;
   margin-bottom: 8px;
-  padding: 4px 10px 4px 4px;
+  padding: 8px 18px 8px 8px;
+  overflow: hidden;
   border: 1px solid rgba(214, 185, 205, 0.4);
   border-radius: 999px;
   background: rgba(12, 9, 14, 0.45);
 }
 
-.chip img {
-  width: 32px;
-  height: 32px;
+.chip img,
+.badgeIcon {
+  display: block;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  max-width: 52px;
   object-fit: contain;
+  border-radius: 14px;
+}
+
+.badgeIcon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  max-width: 40px;
+  border-radius: 10px;
 }
 
 .chip span {
@@ -664,34 +684,40 @@
 }
 
 @media (min-width: 840px) {
+  .ticks span {
+    width: 48px;
+    height: 4px;
+    background: rgba(247, 245, 243, 0.72);
+  }
+
+  .ticks span[data-on='true'] {
+    background: #f3e3ee;
+  }
+
+  .step {
+    color: #f7f5f3;
+  }
+
   .screen[data-screen='draw'] .body {
-    flex-direction: row;
-    align-items: flex-end;
+    flex-direction: column;
+    align-items: center;
     justify-content: space-between;
-    gap: 32px;
   }
 
   .screen[data-screen='draw'] .copy {
-    flex: 1 1 auto;
-    max-width: 560px;
-  }
-
-  .screen[data-screen='draw'] .copy:has(.districtNumber) {
-    flex: 0 1 420px;
+    flex: 0 0 auto;
+    width: min(100%, 640px);
+    max-width: 640px;
     margin-inline: auto;
-    text-align: center;
-  }
-
-  .screen[data-screen='draw'] .body:has(.districtNumber) {
-    justify-content: center;
   }
 
   .screen[data-screen='draw'] .crest {
-    order: 2;
-    flex: 0 0 min(44%, 460px);
-    width: min(44%, 460px);
-    height: min(52vh, 480px);
-    margin-bottom: 4px;
+    order: 0;
+    flex: 1 1 auto;
+    width: min(100%, 480px);
+    max-height: 48vh;
+    height: auto;
+    margin: 8px auto 0;
   }
 
   .body,
@@ -829,10 +855,97 @@
   text-transform: uppercase;
 }
 
+.results {
+  display: none;
+}
+
 @media (min-width: 840px) {
+  .stage[data-screen='result'] .stageVideo {
+    visibility: hidden;
+  }
+
+  .stage[data-screen='result'] .resultStill {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    pointer-events: none;
+  }
+
+  .screen[data-screen='item'] .title,
+  .screen[data-screen='strategy'] .title {
+    line-height: 1.2;
+  }
+
+  .screen[data-screen='draw'] .body[data-crest='gone'] .tagline {
+    margin-top: 6px;
+    color: #f7f5f3;
+    font-size: clamp(1.2rem, 2.2vw, 1.85rem);
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+  }
+
+  .screen[data-screen='result'] .scrim {
+    background: linear-gradient(
+      to bottom,
+      rgba(8, 5, 12, 0.08) 0%,
+      rgba(8, 5, 12, 0.16) 36%,
+      rgba(8, 5, 12, 0.86) 64%,
+      rgba(8, 5, 12, 0.96) 100%
+    );
+  }
+
+  .screen[data-screen='result'] .body {
+    justify-content: flex-end;
+  }
+
   .screen[data-screen='result'] .copy {
-    width: min(100%, 460px);
+    width: min(100%, 760px);
+    max-width: 760px;
     margin-inline: auto;
+    justify-content: flex-end;
+  }
+
+  .screen[data-screen='result'] .story {
+    display: none;
+  }
+
+  .screen[data-screen='result'] .results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: min(100%, 720px);
+    margin: 0 auto 4vh;
+    text-align: center;
+  }
+
+  .screen[data-screen='result'] .results .districtLabel,
+  .screen[data-screen='result'] .results .tagline,
+  .screen[data-screen='result'] .results .characteristic,
+  .screen[data-screen='result'] .results .phrase,
+  .screen[data-screen='result'] .results .explanation {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .screen[data-screen='result'] .results .tagline {
+    color: #f7f5f3;
+    font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+    line-height: 1.3;
+  }
+
+  .screen[data-screen='result'] .results .characteristic {
+    line-height: 1.15;
+  }
+
+  .screen[data-screen='result'] .results .phrase,
+  .screen[data-screen='result'] .results .explanation {
+    max-width: 40rem;
+    line-height: 1.5;
   }
 
   .screen[data-screen='result'] .actions {

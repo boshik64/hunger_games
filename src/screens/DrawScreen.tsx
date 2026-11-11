@@ -45,7 +45,7 @@ export function DrawScreen() {
             disabled={isDrawing}
             onClick={drawn ? prepare : startDraw}
           >
-            {drawn ? ru.draw.prepare : ru.draw.action}
+            {drawn ? ru.draw.prepareBattle : ru.draw.action}
           </ActionButton>
           {drawn ? null : <TicketLink />}
         </>

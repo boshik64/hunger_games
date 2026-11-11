@@ -18,6 +18,7 @@ function useHydrated(): boolean {
 
 export function App() {
   const hydrated = useHydrated();
+  const screen = useGameStore((state) => state.screen);
 
   useEffect(() => {
     if (!hydrated) return;
@@ -26,7 +27,7 @@ export function App() {
   }, [hydrated]);
 
   return (
-    <div className={styles.stage}>
+    <div className={styles.stage} data-screen={hydrated ? screen : undefined}>
       <video
         className={styles.stageVideo}
         src={`${import.meta.env.BASE_URL}video/draw.mp4?v=2`}
@@ -38,6 +39,13 @@ export function App() {
         disablePictureInPicture
         aria-hidden="true"
       />
+      {hydrated && screen === 'result' ? (
+        <img
+          className={styles.resultStill}
+          src={`${import.meta.env.BASE_URL}assets/final/scene-strategy.webp`}
+          alt=""
+        />
+      ) : null}
       {hydrated ? <ScreenRouter /> : <div className={styles.boot} />}
     </div>
   );

@@ -100,6 +100,13 @@ export function ResultScreen() {
         </>
       }
     >
+      <div className={styles.results}>
+        {district ? <p className={styles.districtLabel}>{district.title}</p> : null}
+        {district ? <p className={styles.tagline}>{district.tagline}</p> : null}
+        {characteristic ? <p className={styles.characteristic}>{characteristic.name}</p> : null}
+        {characteristic ? <p className={styles.phrase}>{characteristic.phrase}</p> : null}
+        {result ? <p className={styles.explanation}>{result.explanation}</p> : null}
+      </div>
       <div className={styles.story}>
         <div className={styles.cardSlot}>
           {card ? (

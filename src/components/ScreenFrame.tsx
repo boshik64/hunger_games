@@ -6,6 +6,7 @@ import { ru } from '../content/ru';
 import { getDistrict } from '../content/districts';
 import { selectProgressLabel, selectStep } from '../game/selectors';
 import { useGameStore } from '../game/store';
+import { useVisualScreen } from '../app/visualScreen';
 import styles from '../app/shell.module.css';
 
 type CrestPhase = 'on' | 'leave' | 'gone';
@@ -21,7 +22,7 @@ export function ScreenFrame({
   children: ReactNode;
   actions: ReactNode;
 }) {
-  const screen = useGameStore((state) => state.screen);
+  const screen = useVisualScreen();
   const isDrawing = useGameStore((state) => state.isDrawing);
   const drawn = useGameStore((state) => state.drawn);
   const districtId = useGameStore((state) => state.district);
@@ -117,9 +118,9 @@ export function ScreenFrame({
               <Badge
                 variant="outline"
                 style={{ borderRadius: 999 }}
-                className="!h-9 !gap-2 !border-white/25 !bg-[rgba(120,92,140,0.4)] !px-3 !text-[0.72rem] !tracking-[0.14em] !text-white !uppercase"
+                className="!h-12 !gap-2 !overflow-hidden !border-white/25 !bg-[rgba(120,92,140,0.4)] !pl-1.5 !pr-3 !text-[0.72rem] !tracking-[0.14em] !text-white !uppercase"
               >
-                <AssetImage id={district.symbolAssetId} alt="" className="size-7" />
+                <AssetImage id={district.symbolAssetId} alt="" className={styles.badgeIcon} />
                 <span>{district.title}</span>
               </Badge>
             ) : null}

@@ -57,19 +57,22 @@
   place-items: center;
   height: 22px;
   padding: 0 8px;
-  border: 1px solid rgba(255, 247, 251, 0.55);
+  border: 0;
   border-radius: 999px;
-  background: #140910;
+  background: #e10600;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1;
   overflow: hidden;
   isolation: isolate;
 }
 
-.karoStickerFace img {
+.karoStickerFace > span {
   position: relative;
-  z-index: 1;
-  display: block;
-  height: 12px;
-  width: auto;
+  z-index: 3;
 }
 
 .karoStickerFace::after {
@@ -202,8 +205,22 @@
 }
 
 .choice img[src$='.svg'] {
+  width: 72px;
+  height: 72px;
+  min-width: 72px;
+  max-width: 72px;
   object-fit: contain;
   object-position: center;
+  border-radius: 16px;
+}
+
+@media (min-width: 840px) {
+  .choice img[src$='.svg'] {
+    width: 88px;
+    height: 88px;
+    min-width: 88px;
+    max-width: 88px;
+  }
 }
 
 .name {

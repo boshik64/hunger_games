@@ -100,7 +100,7 @@ export function TicketLink({
     >
       <span className={styles.karoSticker} aria-hidden="true">
         <span className={styles.karoStickerFace}>
-          <img src={`${import.meta.env.BASE_URL}assets/karo-logo.svg`} alt="" />
+          <span>КАРО</span>
         </span>
       </span>
       {ru.tickets}
