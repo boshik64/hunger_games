@@ -1,5 +1,6 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Badge } from '@/components/ui/badge';
+import { getAsset } from '../assets/manifest';
 import { AssetImage } from './AssetImage';
 import { SoundToggle } from './SoundToggle';
 import { ru } from '../content/ru';
@@ -26,17 +27,27 @@ export function ScreenFrame({
 }) {
   const screen = useGameStore((state) => state.screen);
   const districtId = useGameStore((state) => state.district);
-  const titleRef = useRef<HTMLHeadingElement>(null);
   const district = districtId == null ? undefined : getDistrict(districtId);
   const step = selectStep(screen);
 
-  useEffect(() => {
-    titleRef.current?.focus();
-  }, [screen]);
-
   return (
     <section className={styles.screen} data-screen={screen}>
-      <AssetImage id={SCENES[screen]} alt="" className={styles.backdrop} />
+      {screen === 'draw' ? (
+        <video
+          className={styles.backdrop}
+          src={`${import.meta.env.BASE_URL}video/draw.mp4?v=2`}
+          poster={getAsset('scene.draw').src}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          disablePictureInPicture
+          aria-hidden="true"
+        />
+      ) : (
+        <AssetImage id={SCENES[screen]} alt="" className={styles.backdrop} />
+      )}
       <div className={styles.scrim} />
       <div className={styles.column}>
         <header className={styles.header}>
@@ -63,11 +74,18 @@ export function ScreenFrame({
           </div>
         </header>
         <div className={styles.body}>
-          <AssetImage id="wordmark.film" alt={ru.filmTitle} className={styles.brand} />
-          <h1 ref={titleRef} tabIndex={-1} className={styles.title}>
-            {title}
-          </h1>
-          {children}
+          {screen === 'draw' ? (
+            <div className={styles.crest}>
+              <div className={styles.crestFrame}>
+                <img src={`${import.meta.env.BASE_URL}assets/crest.webp?v=5`} alt="" draggable={false} />
+              </div>
+            </div>
+          ) : null}
+          <div className={styles.copy}>
+            <AssetImage id="wordmark.film" alt={ru.filmTitle} className={styles.brand} />
+            <h1 className={styles.title}>{title}</h1>
+            {children}
+          </div>
         </div>
         <div className={styles.actions}>
           {actions}
