@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920" role="img">
+  <rect width="1080" height="1920" fill="#1a1613"/>
+  <rect x="54" y="54" width="972" height="1812" fill="#241c17" stroke="#d4894a" stroke-width="13" rx="38"/>
+  
+  
+  <text x="540" y="150" text-anchor="middle" fill="#f4efe6" font-family="Arial, Helvetica, sans-serif" font-size="48" font-weight="700">Плейсхолдер фона карточки</text>
+<text x="540" y="192.5" text-anchor="middle" fill="#d9cbb8" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="500">Тематическое оформление для сторис</text>
+</svg>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img">
+  <rect width="512" height="512" fill="#1a1613"/>
+  <rect x="26" y="26" width="460" height="460" fill="#241c17" stroke="#446222" stroke-width="6" rx="18"/>
+  <text x="256" y="82" text-anchor="middle" fill="#c4a36a" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="2">ПЛЕЙСХОЛДЕР</text>
+  <text x="256" y="225" text-anchor="middle" fill="#446222" font-family="Arial, Helvetica, sans-serif" font-size="123" font-weight="700">4</text>
+  <text x="256" y="328" text-anchor="middle" fill="#f4efe6" font-family="Arial, Helvetica, sans-serif" font-size="37" font-weight="700">Символ дистрикта</text>
+<text x="256" y="364" text-anchor="middle" fill="#d9cbb8" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="500">рыболовство</text>
+</svg>

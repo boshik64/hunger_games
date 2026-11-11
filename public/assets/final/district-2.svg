@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <circle cx="256" cy="256" r="228" fill="#14110e" stroke="#e2c09a" stroke-width="16"/>
+  <circle cx="256" cy="256" r="188" fill="none" stroke="#e2c09a" stroke-width="2" opacity="0.55"/>
+  <path d="M256 112l78 32v62c0 54-34 86-78 104-44-18-78-50-78-104v-62z" fill="none" stroke="#e2c09a" stroke-width="14" stroke-linejoin="round"/>
+  <text x="256" y="392" text-anchor="middle" fill="#e2c09a" font-family="Oswald, Arial Narrow, sans-serif" font-size="54" font-weight="600">2</text>
+</svg>

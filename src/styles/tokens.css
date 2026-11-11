@@ -1,0 +1,52 @@
+:root {
+  --bg: #050307;
+  --bg-elevated: #120c16;
+  --bg-overlay: rgba(5, 3, 7, 0.72);
+  --text: #f7f5f3;
+  --text-muted: #d9d0d4;
+  --hg-accent: #f7f5f3;
+  --hg-accent-strong: #d6b9cd;
+  --gold: #d6b9cd;
+  --fog: #b9a8c4;
+  --line: rgba(224, 192, 216, 0.32);
+  --focus: #e0c0d8;
+  --danger: #e07a6a;
+
+  --font-display: 'Oswald', 'Arial Narrow', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.75rem;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --tap: 48px;
+  --content-max: 960px;
+
+  --motion-fade: 150ms;
+  --motion-draw: 1800ms;
+  --motion-shift: 600ms;
+  --motion-card: 400ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fade: 150ms;
+    --motion-draw: 0ms;
+    --motion-shift: 0ms;
+    --motion-card: 150ms;
+  }
+}

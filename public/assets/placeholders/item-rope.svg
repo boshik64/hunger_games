@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="420" viewBox="0 0 800 420" role="img">
+  <rect width="800" height="420" fill="#1a1613"/>
+  <rect x="21" y="21" width="758" height="378" fill="#241c17" stroke="#d4894a" stroke-width="5" rx="15"/>
+  <text x="400" y="118" text-anchor="middle" fill="#c4a36a" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" letter-spacing="2">ПЛЕЙСХОЛДЕР</text>
+  
+  <text x="400" y="218" text-anchor="middle" fill="#f4efe6" font-family="Arial, Helvetica, sans-serif" font-size="37" font-weight="700">Иконка предмета</text>
+<text x="400" y="255" text-anchor="middle" fill="#d9cbb8" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="500">Моток верёвки</text>
+</svg>
