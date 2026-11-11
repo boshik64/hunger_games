@@ -47,25 +47,20 @@ export function DrawScreen() {
           >
             {drawn ? ru.draw.prepare : ru.draw.action}
           </ActionButton>
-          <TicketLink />
+          {drawn ? null : <TicketLink />}
         </>
       }
     >
       {drawn && district ? (
         <>
-          <p className={styles.districtNumber}>{district.id}</p>
+          <p className={styles.districtLabel}>{ru.draw.yours}</p>
           <AssetImage id={district.symbolAssetId} alt="" className={styles.symbol} />
           <p className={styles.tagline}>{district.tagline}</p>
         </>
       ) : (
         <>
           {isDrawing && rolling != null ? <p className={styles.roll}>{rolling}</p> : null}
-          {isDrawing ? null : (
-            <>
-              <p className={styles.lede}>{ru.draw.subtitle}</p>
-              <p className={styles.note}>{ru.draw.caption}</p>
-            </>
-          )}
+          {isDrawing ? null : <p className={styles.lede}>{ru.draw.subtitle}</p>}
         </>
       )}
     </ScreenFrame>

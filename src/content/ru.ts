@@ -11,6 +11,7 @@ export const ru = {
     caption: 'Около минуты. Без регистрации',
     action: 'Вытянуть жребий',
     prepare: 'Подготовиться',
+    yours: 'Твой дистрикт:',
   },
 
   item: {
@@ -87,6 +88,7 @@ export const ru = {
     soundOn: 'Выключить звук',
     soundOff: 'Включить звук',
     sound: 'Звук',
+    share: 'Поделиться',
     progressStep: (step: 1 | 2 | 3 | 4) => `Шаг ${step} из 4`,
   },
 } as const;

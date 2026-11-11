@@ -218,9 +218,19 @@
   animation: brandIn 800ms var(--ease-out) both;
 }
 
+.screen[data-screen='draw'] .copy {
+  text-align: center;
+}
+
 .screen[data-screen='draw'] .brand {
   width: min(100%, 460px);
+  margin-inline: auto;
   filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.95)) drop-shadow(0 12px 22px rgba(0, 0, 0, 0.75));
+}
+
+.screen[data-screen='draw'] .title,
+.screen[data-screen='draw'] .lede {
+  margin-inline: auto;
 }
 
 .title {
@@ -294,6 +304,22 @@
   width: auto;
   height: min(22dvh, 168px);
   margin: 0 auto 8px;
+}
+
+.districtLabel {
+  margin: 0 0 12px;
+  color: #f7f5f3;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 6vw, 2.6rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.screen[data-screen='draw'] .body[data-crest='gone'] .symbol {
+  height: min(46dvh, 380px);
 }
 
 .characteristic {
@@ -612,6 +638,10 @@
     height: 16dvh;
   }
 
+  .screen[data-screen='draw'] .body[data-crest='gone'] .symbol {
+    height: min(34dvh, 220px);
+  }
+
   .districtNumber,
   .roll {
     font-size: 3rem;
@@ -732,4 +762,87 @@
 .screen[data-screen='draw'] .body[data-crest='leave'] .note,
 .screen[data-screen='draw'] .body[data-crest='gone'] .note {
   margin-inline: auto;
+}
+
+.screen[data-screen='result'] .body {
+  justify-content: center;
+  padding: 4px 16px 0;
+}
+
+.screen[data-screen='result'] .copy {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 520px;
+  min-height: 0;
+}
+
+.screen[data-screen='result'] .story {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-height: 0;
+  width: 100%;
+}
+
+.screen[data-screen='result'] .story .cardSlot {
+  float: none;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.screen[data-screen='result'] .cardButton {
+  width: 100%;
+  height: 100%;
+}
+
+.screen[data-screen='result'] .cardPreview,
+.screen[data-screen='result'] .skeleton {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+.sharePop {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(100%, 360px);
+  padding: 22px 18px 18px;
+  border: 1px solid rgba(224, 192, 216, 0.35);
+  border-radius: 20px;
+  background: #120c14;
+}
+
+.sharePop > p {
+  margin: 0 0 6px;
+  color: #e0c0d8;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.16em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@media (min-width: 840px) {
+  .screen[data-screen='result'] .copy {
+    width: min(100%, 460px);
+    margin-inline: auto;
+  }
+
+  .screen[data-screen='result'] .actions {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+
+  .screen[data-screen='result'] .actions > * {
+    flex: 1 1 0;
+    width: auto !important;
+  }
 }

@@ -98,11 +98,10 @@ export async function renderCard(snapshot: CardSnapshot): Promise<PreparedCard> 
   ]);
 
   const symbolId = `district.symbol.${snapshot.district}`;
-  const [background, symbol, itemIcon, logo, wordmark] = await Promise.all([
+  const [background, symbol, itemIcon, wordmark] = await Promise.all([
     loadImage(getAsset('card.bg').src),
     loadImage(getAsset(symbolId).src),
     loadImage(getAsset(`item.${snapshot.itemId}`).src),
-    loadImage(getAsset('logo.karo').src),
     loadImage(getAsset('wordmark.film').src),
   ]);
 
@@ -137,17 +136,22 @@ export async function renderCard(snapshot: CardSnapshot): Promise<PreparedCard> 
 
   ctx.textAlign = 'center';
   ctx.textBaseline = 'alphabetic';
-  let y = 1040;
   if (wordmark) {
-    const logoWidth = 860;
+    const logoWidth = 780;
     const logoHeight = Math.round((logoWidth * wordmark.height) / wordmark.width);
-    ctx.drawImage(wordmark, (WIDTH - logoWidth) / 2, 930, logoWidth, logoHeight);
-    y = 930 + logoHeight + 36;
+    ctx.save();
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+    ctx.shadowBlur = 22;
+    ctx.shadowOffsetY = 8;
+    ctx.drawImage(wordmark, (WIDTH - logoWidth) / 2, 64, logoWidth, logoHeight);
+    ctx.restore();
   } else {
     ctx.fillStyle = '#f4efe6';
     ctx.font = `700 52px "${FONT_DISPLAY}", sans-serif`;
-    y = drawCentered(ctx, snapshot.filmTitle, 1040, 920, 62);
+    drawCentered(ctx, snapshot.filmTitle, 150, 920, 62);
   }
+
+  let y = 1020;
 
   ctx.fillStyle = snapshot.accent;
   ctx.font = `600 40px "${FONT_DISPLAY}", sans-serif`;
@@ -181,12 +185,6 @@ export async function renderCard(snapshot: CardSnapshot): Promise<PreparedCard> 
   ctx.textAlign = 'left';
   ctx.fillText(snapshot.itemName, WIDTH / 2 - 76, y + 64);
   ctx.textAlign = 'center';
-
-  if (logo) {
-    const logoWidth = 220;
-    const logoHeight = Math.round((logoWidth * logo.height) / logo.width);
-    ctx.drawImage(logo, (WIDTH - logoWidth) / 2, 1708, logoWidth, logoHeight);
-  }
 
   const blob = await canvasToBlob(canvas);
   const filename = `hunger-games-d${snapshot.district}-${snapshot.fileSlug}.png`;

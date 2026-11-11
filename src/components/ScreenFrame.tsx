@@ -152,18 +152,14 @@ export function ScreenFrame({
             </div>
           ) : null}
           <div className={styles.copy} ref={copyRef}>
-            <AssetImage id="wordmark.film" alt={ru.filmTitle} className={styles.brand} />
+            {screen === 'draw' && !drawn ? (
+              <AssetImage id="wordmark.film" alt={ru.filmTitle} className={styles.brand} />
+            ) : null}
             <h1 className={styles.title}>{title}</h1>
             {children}
           </div>
         </div>
-        <div className={styles.actions}>
-          {actions}
-          <footer className={styles.footer}>
-            <span>{ru.footer}</span>
-            <AssetImage id="logo.karo" alt="КАРО" className={styles.footerLogo} />
-          </footer>
-        </div>
+        <div className={styles.actions}>{actions}</div>
         <p className="sr-only" aria-live="polite">
           {selectProgressLabel(screen)}
         </p>
