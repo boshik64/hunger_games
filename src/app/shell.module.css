@@ -160,6 +160,10 @@
   padding: 12px 20px 4px;
 }
 
+.screen:not([data-screen='draw']) .body {
+  justify-content: safe center;
+}
+
 .crest {
   flex: 1;
   min-width: 0;
@@ -184,7 +188,11 @@
 
 .screen[data-screen='item'] .brand,
 .screen[data-screen='item'] .title,
-.screen[data-screen='item'] .note {
+.screen[data-screen='item'] .note,
+.screen[data-screen='strategy'] .brand,
+.screen[data-screen='strategy'] .title,
+.screen[data-screen='strategy'] .lede,
+.screen[data-screen='strategy'] .chip {
   margin-inline: auto;
   text-align: center;
 }
@@ -195,6 +203,10 @@
   height: 100%;
   max-width: none;
   object-fit: contain;
+}
+
+.crestFrame[data-fly='leave'] {
+  animation: crestAway 720ms cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
 }
 
 .brand {
@@ -516,6 +528,13 @@
   animation: sealFlip 900ms cubic-bezier(0.45, 0.05, 0.55, 0.95);
 }
 
+@keyframes crestAway {
+  to {
+    transform: translateY(calc(-100% - 36px));
+    opacity: 0;
+  }
+}
+
 @keyframes brandIn {
   from {
     opacity: 0;
@@ -677,4 +696,40 @@
   .screen[data-screen='draw'] .footer {
     flex: 1 0 100%;
   }
+}
+
+.screen[data-screen='draw'] .body[data-crest='leave'],
+.screen[data-screen='draw'] .body[data-crest='gone'] {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen[data-screen='draw'] .body[data-crest='leave'] .crest,
+.screen[data-screen='draw'] .body[data-crest='gone'] .crest {
+  order: 0;
+  flex: 0 0 0px;
+  width: 0;
+  height: 0;
+  min-height: 0;
+  margin: 0;
+  overflow: visible;
+}
+
+.screen[data-screen='draw'] .body[data-crest='leave'] .copy,
+.screen[data-screen='draw'] .body[data-crest='gone'] .copy {
+  flex: 0 1 auto;
+  width: min(100%, 520px);
+  max-width: 520px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.screen[data-screen='draw'] .body[data-crest='leave'] .brand,
+.screen[data-screen='draw'] .body[data-crest='gone'] .brand,
+.screen[data-screen='draw'] .body[data-crest='leave'] .lede,
+.screen[data-screen='draw'] .body[data-crest='gone'] .lede,
+.screen[data-screen='draw'] .body[data-crest='leave'] .note,
+.screen[data-screen='draw'] .body[data-crest='gone'] .note {
+  margin-inline: auto;
 }

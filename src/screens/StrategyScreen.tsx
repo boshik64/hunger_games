@@ -1,4 +1,3 @@
-import { ActionButton } from '../components/ActionButton';
 import { AssetImage } from '../components/AssetImage';
 import { ChoiceGroup } from '../components/ChoiceGroup';
 import { ScreenFrame } from '../components/ScreenFrame';
@@ -22,18 +21,7 @@ export function StrategyScreen() {
   const confirmStrategy = useGameStore((state) => state.confirmStrategy);
 
   return (
-    <ScreenFrame
-      title={ru.strategy.title}
-      actions={
-        <ActionButton
-          variant="primary"
-          disabled={pendingStrategy == null || isTransitioning}
-          onClick={confirmStrategy}
-        >
-          {ru.strategy.confirm}
-        </ActionButton>
-      }
-    >
+    <ScreenFrame title={ru.strategy.title} actions={null}>
       <p className={styles.lede}>{ru.strategy.situation}</p>
       {item ? (
         <div className={styles.chip}>
@@ -46,8 +34,12 @@ export function StrategyScreen() {
         options={options}
         value={pendingStrategy}
         columns={2}
+        layout="tiles"
         disabled={isTransitioning}
-        onChange={selectStrategy}
+        onChange={(id) => {
+          selectStrategy(id);
+          confirmStrategy();
+        }}
       />
     </ScreenFrame>
   );

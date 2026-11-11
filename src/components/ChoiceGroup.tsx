@@ -19,6 +19,7 @@ export function ChoiceGroup<T extends string>({
   value,
   onChange,
   columns,
+  layout = 'list',
   disabled = false,
 }: {
   label: string;
@@ -26,6 +27,7 @@ export function ChoiceGroup<T extends string>({
   value: T | null;
   onChange: (id: T) => void;
   columns: 2 | 3;
+  layout?: 'list' | 'tiles';
   disabled?: boolean;
 }) {
   const screen = useGameStore((state) => state.screen);
@@ -61,6 +63,7 @@ export function ChoiceGroup<T extends string>({
       role="radiogroup"
       aria-label={label}
       data-columns={columns}
+      data-layout={layout}
       onKeyDown={onKeyDown}
     >
       {options.map((option, index) => {
@@ -85,7 +88,11 @@ export function ChoiceGroup<T extends string>({
           >
             <Card
               size="sm"
-              className="!w-full !flex-row !items-center !gap-3 !overflow-visible !rounded-none !bg-transparent !py-0 !text-inherit !shadow-none !ring-0 md:!flex-col md:!items-stretch"
+              className={
+                layout === 'tiles'
+                  ? '!w-full !min-w-0 !flex-col !items-stretch !gap-2 !overflow-visible !rounded-none !bg-transparent !py-0 !text-inherit !shadow-none !ring-0'
+                  : '!w-full !flex-row !items-center !gap-3 !overflow-visible !rounded-none !bg-transparent !py-0 !text-inherit !shadow-none !ring-0 md:!flex-col md:!items-stretch'
+              }
             >
               <AssetImage id={option.assetId} alt="" />
               <CardHeader className="!px-0 !py-0">

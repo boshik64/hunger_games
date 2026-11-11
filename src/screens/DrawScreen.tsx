@@ -37,7 +37,7 @@ export function DrawScreen() {
 
   return (
     <ScreenFrame
-      title={drawn ? '' : ru.draw.title}
+      title={drawn || isDrawing ? '' : ru.draw.title}
       actions={
         <>
           <ActionButton
@@ -60,8 +60,12 @@ export function DrawScreen() {
       ) : (
         <>
           {isDrawing && rolling != null ? <p className={styles.roll}>{rolling}</p> : null}
-          <p className={styles.lede}>{ru.draw.subtitle}</p>
-          <p className={styles.note}>{ru.draw.caption}</p>
+          {isDrawing ? null : (
+            <>
+              <p className={styles.lede}>{ru.draw.subtitle}</p>
+              <p className={styles.note}>{ru.draw.caption}</p>
+            </>
+          )}
         </>
       )}
     </ScreenFrame>

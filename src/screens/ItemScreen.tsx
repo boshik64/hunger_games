@@ -1,4 +1,3 @@
-import { ActionButton } from '../components/ActionButton';
 import { ChoiceGroup } from '../components/ChoiceGroup';
 import { ScreenFrame } from '../components/ScreenFrame';
 import { ru } from '../content/ru';
@@ -20,18 +19,7 @@ export function ItemScreen() {
   const confirmItem = useGameStore((state) => state.confirmItem);
 
   return (
-    <ScreenFrame
-      title={ru.item.title}
-      actions={
-        <ActionButton
-          variant="primary"
-          disabled={pendingItem == null || isTransitioning}
-          onClick={confirmItem}
-        >
-          {ru.item.continue}
-        </ActionButton>
-      }
-    >
+    <ScreenFrame title={ru.item.title} actions={null}>
       <p className={styles.note}>{ru.item.caption}</p>
       <ChoiceGroup<ItemId>
         label={ru.item.caption}
@@ -39,7 +27,10 @@ export function ItemScreen() {
         value={pendingItem}
         columns={3}
         disabled={isTransitioning}
-        onChange={selectItem}
+        onChange={(id) => {
+          selectItem(id);
+          confirmItem();
+        }}
       />
     </ScreenFrame>
   );
