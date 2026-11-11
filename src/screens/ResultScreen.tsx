@@ -11,7 +11,7 @@ import { getDistrict } from '../content/districts';
 import { ru } from '../content/ru';
 import { selectCharacteristic, selectResult } from '../game/selectors';
 import { useGameStore } from '../game/store';
-import { ogImageUrl, telegramShareUrl, vkShareUrl } from '../share/links';
+import { ogImageUrl, sharePageUrl, telegramShareUrl, vkShareUrl } from '../share/links';
 import styles from '../app/shell.module.css';
 
 function downloadCard(card: PreparedCard) {
@@ -100,8 +100,10 @@ export function ResultScreen() {
         <>
           <TicketLink locked={isTransitioning} variant="primary" />
           <div className={styles.pair}>
-            <ShareLink href={telegramShareUrl(shareText, siteUrl)}>{ru.share.telegram}</ShareLink>
-            <ShareLink href={vkShareUrl(shareText, siteUrl, ogImageUrl(siteUrl))}>
+            <ShareLink href={telegramShareUrl(shareText, sharePageUrl(siteUrl))}>
+              {ru.share.telegram}
+            </ShareLink>
+            <ShareLink href={vkShareUrl(shareText, sharePageUrl(siteUrl), ogImageUrl(siteUrl))}>
               {ru.share.vk}
             </ShareLink>
           </div>

@@ -77,7 +77,12 @@ export function TicketLink({
   const screen = useGameStore((state) => state.screen);
   return (
     <a
-      className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), looks[variant])}
+      className={cn(
+        buttonVariants({ variant: 'outline', size: 'lg' }),
+        looks[variant],
+        styles.ticket,
+        '!overflow-visible',
+      )}
       href={ticketsUrl}
       target="_blank"
       rel="noopener noreferrer"
@@ -93,6 +98,11 @@ export function TicketLink({
         }
       }}
     >
+      <span className={styles.karoSticker} aria-hidden="true">
+        <span className={styles.karoStickerFace}>
+          <img src={`${import.meta.env.BASE_URL}assets/karo-logo.svg`} alt="" />
+        </span>
+      </span>
       {ru.tickets}
     </a>
   );

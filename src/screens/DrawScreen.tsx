@@ -37,7 +37,7 @@ export function DrawScreen() {
 
   return (
     <ScreenFrame
-      title={ru.draw.title}
+      title={drawn ? '' : ru.draw.title}
       actions={
         <>
           <ActionButton

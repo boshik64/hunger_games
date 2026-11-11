@@ -25,6 +25,20 @@ export function App() {
     track('landing_view', eventParams(state), state.sessionId);
   }, [hydrated]);
 
-  if (!hydrated) return <div className={styles.boot} />;
-  return <ScreenRouter />;
+  return (
+    <div className={styles.stage}>
+      <video
+        className={styles.stageVideo}
+        src={`${import.meta.env.BASE_URL}video/draw.mp4?v=2`}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        disablePictureInPicture
+        aria-hidden="true"
+      />
+      {hydrated ? <ScreenRouter /> : <div className={styles.boot} />}
+    </div>
+  );
 }

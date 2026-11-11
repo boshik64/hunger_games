@@ -1,6 +1,24 @@
+.stage {
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.stageVideo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  pointer-events: none;
+}
+
 .boot,
 .screen {
-  background: var(--bg);
+  background: transparent;
 }
 
 .boot {
@@ -9,6 +27,7 @@
 
 .screen {
   position: relative;
+  z-index: 1;
   height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -31,12 +50,8 @@
 .scrim {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(180deg, rgba(8, 5, 12, 0.58) 0%, rgba(8, 5, 12, 0.08) 26%, rgba(8, 5, 12, 0.22) 48%, rgba(8, 5, 12, 0.78) 70%, rgba(8, 5, 12, 0.96) 84%, #08050c 100%);
-}
-
-.screen[data-screen='draw'] .scrim {
-  display: none;
+  background: rgba(8, 5, 12, 0.34);
+  pointer-events: none;
 }
 
 .screen[data-screen='draw'] .backdrop {
@@ -50,11 +65,6 @@
 .screen[data-screen='draw'] .lede,
 .screen[data-screen='draw'] .note {
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.85);
-}
-
-.screen[data-screen='result'] .scrim {
-  background:
-    linear-gradient(180deg, rgba(8, 5, 12, 0.55) 0%, rgba(8, 5, 12, 0.42) 20%, rgba(8, 5, 12, 0.78) 46%, rgba(8, 5, 12, 0.94) 70%, #08050c 100%);
 }
 
 .screen[data-screen='result'] .backdrop {
@@ -164,26 +174,19 @@
 
 .crestFrame {
   position: relative;
-  width: min(100cqw, calc(100cqh * 1000 / 934), 560px);
-  aspect-ratio: 1000 / 934;
-  filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.55));
-}
-
-.crestFrame::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  left: 50%;
-  top: 62%;
-  width: 86%;
-  height: 52%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(ellipse at center, rgba(8, 5, 12, 0.78) 0%, rgba(8, 5, 12, 0.42) 42%, rgba(8, 5, 12, 0) 74%);
-  pointer-events: none;
+  width: min(100cqw, calc(100cqh * 860 / 803), 560px);
+  aspect-ratio: 860 / 803;
 }
 
 .copy {
   min-width: 0;
+}
+
+.screen[data-screen='item'] .brand,
+.screen[data-screen='item'] .title,
+.screen[data-screen='item'] .note {
+  margin-inline: auto;
+  text-align: center;
 }
 
 .crestFrame img {
@@ -218,6 +221,10 @@
   line-height: 0.9;
   letter-spacing: 0.03em;
   text-transform: uppercase;
+}
+
+.title:empty {
+  display: none;
 }
 
 .title:focus,
@@ -261,6 +268,10 @@
   text-transform: uppercase;
 }
 
+.screen[data-screen='draw'] .tagline {
+  text-align: center;
+}
+
 .phrase,
 .explanation {
   font-size: 0.92rem;
@@ -270,7 +281,7 @@
   display: block;
   width: auto;
   height: min(22dvh, 168px);
-  margin: 0 0 8px;
+  margin: 0 auto 8px;
 }
 
 .characteristic {
@@ -293,10 +304,7 @@
   line-height: 0.85;
   letter-spacing: 0.04em;
   color: #d6b9cd;
-}
-
-.roll {
-  text-align: left;
+  text-align: center;
 }
 
 .actions {
@@ -315,12 +323,23 @@
 }
 
 .footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   margin: 2px 0 0;
   color: rgba(247, 245, 243, 0.62);
   font-size: 0.68rem;
   line-height: 1.35;
   letter-spacing: 0.02em;
   text-align: center;
+}
+
+.footerLogo {
+  display: block;
+  width: auto;
+  height: 16px;
+  margin: 0;
 }
 
 .chip {
@@ -608,6 +627,16 @@
     max-width: 560px;
   }
 
+  .screen[data-screen='draw'] .copy:has(.districtNumber) {
+    flex: 0 1 420px;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .screen[data-screen='draw'] .body:has(.districtNumber) {
+    justify-content: center;
+  }
+
   .screen[data-screen='draw'] .crest {
     order: 2;
     flex: 0 0 min(44%, 460px);
@@ -625,5 +654,27 @@
 
   .title {
     max-width: 18ch;
+  }
+
+  .screen[data-screen='item'] .copy button {
+    text-align: center;
+  }
+
+  .screen[data-screen='item'] .copy button :global([data-slot='card']) {
+    justify-content: center;
+  }
+
+  .screen[data-screen='draw'] .actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .screen[data-screen='draw'] .actions > :not(.footer) {
+    flex: 1 1 0;
+    width: auto !important;
+  }
+
+  .screen[data-screen='draw'] .footer {
+    flex: 1 0 100%;
   }
 }

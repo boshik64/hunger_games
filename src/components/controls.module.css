@@ -36,6 +36,74 @@
   color: var(--text-muted);
 }
 
+.ticket {
+  position: relative;
+  overflow: visible;
+}
+
+.karoSticker {
+  position: absolute;
+  z-index: 2;
+  top: 5px;
+  right: 12px;
+  transform: rotate(7deg);
+  pointer-events: none;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.4));
+}
+
+.karoStickerFace {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border: 1px solid rgba(255, 247, 251, 0.55);
+  border-radius: 999px;
+  background: #140910;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.karoStickerFace img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  height: 12px;
+  width: auto;
+}
+
+.karoStickerFace::after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  border-radius: inherit;
+  background-image: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 36%,
+    rgba(255, 247, 251, 0.2) 44%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(255, 214, 236, 0.4) 56%,
+    transparent 64%,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 220% 100%;
+  mix-blend-mode: screen;
+  animation: stickerShine 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes stickerShine {
+  from {
+    background-position: 130% 0;
+  }
+  to {
+    background-position: -130% 0;
+  }
+}
+
 .primary[aria-disabled='true'],
 .secondary[aria-disabled='true'],
 .ghost[aria-disabled='true'] {

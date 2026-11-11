@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { getAsset } from '../assets/manifest';
 import { AssetImage } from './AssetImage';
 import { SoundToggle } from './SoundToggle';
 import { ru } from '../content/ru';
@@ -8,13 +7,6 @@ import { getDistrict } from '../content/districts';
 import { selectProgressLabel, selectStep } from '../game/selectors';
 import { useGameStore } from '../game/store';
 import styles from '../app/shell.module.css';
-
-const SCENES = {
-  draw: 'scene.draw',
-  item: 'scene.item',
-  strategy: 'scene.strategy',
-  result: 'scene.result',
-} as const;
 
 export function ScreenFrame({
   title,
@@ -32,22 +24,6 @@ export function ScreenFrame({
 
   return (
     <section className={styles.screen} data-screen={screen}>
-      {screen === 'draw' ? (
-        <video
-          className={styles.backdrop}
-          src={`${import.meta.env.BASE_URL}video/draw.mp4?v=2`}
-          poster={getAsset('scene.draw').src}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          disablePictureInPicture
-          aria-hidden="true"
-        />
-      ) : (
-        <AssetImage id={SCENES[screen]} alt="" className={styles.backdrop} />
-      )}
       <div className={styles.scrim} />
       <div className={styles.column}>
         <header className={styles.header}>
@@ -77,7 +53,7 @@ export function ScreenFrame({
           {screen === 'draw' ? (
             <div className={styles.crest}>
               <div className={styles.crestFrame}>
-                <img src={`${import.meta.env.BASE_URL}assets/crest.webp?v=5`} alt="" draggable={false} />
+                <img src={`${import.meta.env.BASE_URL}assets/crest.webp?v=6`} alt="" draggable={false} />
               </div>
             </div>
           ) : null}
@@ -89,7 +65,10 @@ export function ScreenFrame({
         </div>
         <div className={styles.actions}>
           {actions}
-          <footer className={styles.footer}>{ru.footer}</footer>
+          <footer className={styles.footer}>
+            <span>{ru.footer}</span>
+            <AssetImage id="logo.karo" alt="КАРО" className={styles.footerLogo} />
+          </footer>
         </div>
         <p className="sr-only" aria-live="polite">
           {selectProgressLabel(screen)}

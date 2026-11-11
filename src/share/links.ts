@@ -12,6 +12,14 @@ export function vkShareUrl(message: string, url: string, imageUrl: string) {
   return `https://vk.com/share.php?${params.toString()}`;
 }
 
+export function sharePageUrl(site: string) {
+  const url = new URL(site);
+  url.searchParams.set('v', '2');
+  return url.href;
+}
+
 export function ogImageUrl(site: string) {
-  return new URL('og-cover.jpg', site).href;
+  const url = new URL('og-cover.jpg', site);
+  url.searchParams.set('v', '2');
+  return url.href;
 }
