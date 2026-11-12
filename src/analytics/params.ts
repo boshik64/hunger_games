@@ -3,7 +3,8 @@ import type { GameState } from '../game/types';
 import type { AnalyticsParams } from './events';
 
 export function eventParams(
-  state: Pick<GameState, 'district' | 'item' | 'strategy' | 'attempt'>,
+  state: Pick<GameState, 'district' | 'item' | 'strategy' | 'attempt'> &
+    Partial<Pick<GameState, 'outfit' | 'skill' | 'score'>>,
 ): AnalyticsParams {
   const result =
     state.item && state.strategy
@@ -15,5 +16,8 @@ export function eventParams(
     strategy: state.strategy,
     result,
     attempt: state.attempt,
+    outfit: state.outfit,
+    skill: state.skill,
+    score: state.score,
   };
 }

@@ -1,8 +1,11 @@
-import type { CharacteristicId, ItemId, StrategyId } from '../game/types';
+import type { CharacteristicId, ItemId, OutfitId, SkillId, StrategyId } from '../game/types';
 
 export const STEP_EVENTS = [
   'draw_start',
   'district_assigned',
+  'outfit_selected',
+  'skill_selected',
+  'sponsor_score_shown',
   'item_selected',
   'strategy_selected',
   'game_completed',
@@ -27,4 +30,8 @@ export interface AnalyticsParams {
   attempt?: number;
   active_time_ms?: number;
   screen?: 'draw' | 'result';
+  outfit?: OutfitId | null;
+  skill?: SkillId | null;
+  score?: number | null;
+  skills?: SkillId[];
 }

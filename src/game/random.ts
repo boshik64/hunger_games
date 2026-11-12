@@ -25,6 +25,26 @@ function defaultUint32(): number {
  * Uses crypto.getRandomValues and rejection sampling. Math.random is the fallback
  * when crypto is missing, or when a source keeps landing in the rejected tail.
  */
+const SCORE_MIN = 8;
+const SCORE_SPAN = 5;
+
+export function drawScore(source: Uint32Source = defaultUint32): number {
+  return SCORE_MIN + ((source() >>> 0) % SCORE_SPAN);
+}
+
+const SKILLS = ['bullseye', 'vanish', 'mockingjay', 'balance', 'memory', 'laugh'] as const;
+
+export function drawSkills(source: Uint32Source = defaultUint32): Array<(typeof SKILLS)[number]> {
+  const pool = [...SKILLS];
+  const picked: Array<(typeof SKILLS)[number]> = [];
+  while (picked.length < 3 && pool.length > 0) {
+    const index = (source() >>> 0) % pool.length;
+    const skill = pool.splice(index, 1)[0];
+    if (skill) picked.push(skill);
+  }
+  return picked;
+}
+
 export function drawDistrict(source: Uint32Source = defaultUint32): number {
   for (let attempt = 0; attempt < 16; attempt += 1) {
     const value = source() >>> 0;

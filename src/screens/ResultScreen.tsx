@@ -13,6 +13,9 @@ import styles from '../app/shell.module.css';
 
 export function ResultScreen() {
   const districtId = useGameStore((state) => state.district);
+  const outfit = useGameStore((state) => state.outfit);
+  const skill = useGameStore((state) => state.skill);
+  const score = useGameStore((state) => state.score);
   const item = useGameStore((state) => state.item);
   const strategy = useGameStore((state) => state.strategy);
   const attempt = useGameStore((state) => state.attempt);
@@ -47,6 +50,10 @@ export function ResultScreen() {
       explanation: result.explanation,
       filmTitle: ru.filmTitle,
       fileSlug: result.characteristic,
+      detailLine:
+        outfit && skill && score != null
+          ? `${ru.outfit.options[outfit].name}. ${ru.skill.options[skill].name}. ${ru.score.of(score)}`
+          : undefined,
     })
       .then((prepared) => {
         if (cancelled) {
@@ -96,6 +103,13 @@ export function ResultScreen() {
           <ActionButton variant="secondary" onClick={() => setShareOpen(true)}>
             {ru.service.share}
           </ActionButton>
+          <ActionButton
+            variant="secondary"
+            disabled={isTransitioning}
+            onClick={() => useGameStore.getState().replay()}
+          >
+            {ru.result.restart}
+          </ActionButton>
           <TicketLink locked={isTransitioning} variant="primary" />
         </>
       }
@@ -106,6 +120,11 @@ export function ResultScreen() {
         {characteristic ? <p className={styles.characteristic}>{characteristic.name}</p> : null}
         {characteristic ? <p className={styles.phrase}>{characteristic.phrase}</p> : null}
         {result ? <p className={styles.explanation}>{result.explanation}</p> : null}
+        {outfit && skill && score != null ? (
+          <p className={styles.note}>
+            {ru.outfit.options[outfit].name}. {ru.skill.options[skill].name}. {ru.score.of(score)}
+          </p>
+        ) : null}
       </div>
       <div className={styles.story}>
         <div className={styles.cardSlot}>

@@ -2,6 +2,7 @@ export interface District {
   id: number;
   title: string;
   tagline: string;
+  description: string;
   accent: string;
   symbolAssetId: string;
   isPlaceholder: boolean;
@@ -16,6 +17,7 @@ export const DISTRICTS: readonly District[] = [
     id: 1,
     title: 'Дистрикт 1',
     tagline: 'предметы роскоши',
+    description: 'Драгоценности, которыми любуется Капитолий, создают мастера твоего дистрикта.',
     accent: '#742525',
     symbolAssetId: 'district.symbol.1',
     isPlaceholder: true,
@@ -24,6 +26,7 @@ export const DISTRICTS: readonly District[] = [
     id: 2,
     title: 'Дистрикт 2',
     tagline: 'камнеобработка и оборона',
+    description: 'Здесь добывают камень в карьерах и готовят миротворцев для Капитолия.',
     accent: '#71451e',
     symbolAssetId: 'district.symbol.2',
     isPlaceholder: true,
@@ -32,6 +35,7 @@ export const DISTRICTS: readonly District[] = [
     id: 3,
     title: 'Дистрикт 3',
     tagline: 'технологии',
+    description: 'За экранами, камерами и хитроумной электроникой Панема стоят изобретатели твоего дистрикта.',
     accent: '#5c541f',
     symbolAssetId: 'district.symbol.3',
     isPlaceholder: true,
@@ -40,6 +44,7 @@ export const DISTRICTS: readonly District[] = [
     id: 4,
     title: 'Дистрикт 4',
     tagline: 'рыболовство',
+    description: 'Здесь день начинается с прилива, а рыбаки выходят в море за уловом.',
     accent: '#446222',
     symbolAssetId: 'district.symbol.4',
     isPlaceholder: true,
@@ -48,6 +53,7 @@ export const DISTRICTS: readonly District[] = [
     id: 5,
     title: 'Дистрикт 5',
     tagline: 'энергетика',
+    description: 'Когда в Капитолии зажигаются огни, за это стоит благодарить твой дистрикт.',
     accent: '#21632a',
     symbolAssetId: 'district.symbol.5',
     isPlaceholder: true,
@@ -56,6 +62,7 @@ export const DISTRICTS: readonly District[] = [
     id: 6,
     title: 'Дистрикт 6',
     tagline: 'транспорт',
+    description: 'Поезда, на которых трибуты едут в Капитолий, строят в твоём дистрикте.',
     accent: '#22624b',
     symbolAssetId: 'district.symbol.6',
     isPlaceholder: true,
@@ -64,6 +71,7 @@ export const DISTRICTS: readonly District[] = [
     id: 7,
     title: 'Дистрикт 7',
     tagline: 'лесозаготовка',
+    description: 'Вокруг — густые леса. Здесь заготавливают древесину и делают из неё бумагу.',
     accent: '#225a62',
     symbolAssetId: 'district.symbol.7',
     isPlaceholder: true,
@@ -72,6 +80,7 @@ export const DISTRICTS: readonly District[] = [
     id: 8,
     title: 'Дистрикт 8',
     tagline: 'текстиль',
+    description: 'Под гул ткацких станков здесь рождаются ткани, в которые одевается Панем.',
     accent: '#254d74',
     symbolAssetId: 'district.symbol.8',
     isPlaceholder: true,
@@ -80,6 +89,7 @@ export const DISTRICTS: readonly District[] = [
     id: 9,
     title: 'Дистрикт 9',
     tagline: 'зерно',
+    description: 'Пшеничные поля тянутся до горизонта. С них начинается хлеб Панема.',
     accent: '#2a277c',
     symbolAssetId: 'district.symbol.9',
     isPlaceholder: true,
@@ -88,6 +98,7 @@ export const DISTRICTS: readonly District[] = [
     id: 10,
     title: 'Дистрикт 10',
     tagline: 'скотоводство',
+    description: 'На обширных пастбищах здесь разводят скот и снабжают Панем мясом.',
     accent: '#4d2871',
     symbolAssetId: 'district.symbol.10',
     isPlaceholder: true,
@@ -96,6 +107,7 @@ export const DISTRICTS: readonly District[] = [
     id: 11,
     title: 'Дистрикт 11',
     tagline: 'сельское хозяйство',
+    description: 'В садах и на полях твоего дистрикта созревают фрукты и овощи для Панема.',
     accent: '#732663',
     symbolAssetId: 'district.symbol.11',
     isPlaceholder: true,
@@ -104,6 +116,7 @@ export const DISTRICTS: readonly District[] = [
     id: 12,
     title: 'Дистрикт 12',
     tagline: 'угледобыча',
+    description: 'Шахтёры спускаются под землю за углём. Это дом Хеймитча — и теперь твой.',
     accent: '#742542',
     symbolAssetId: 'district.symbol.12',
     isPlaceholder: true,

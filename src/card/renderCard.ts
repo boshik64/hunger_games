@@ -17,6 +17,7 @@ export interface CardSnapshot {
   explanation: string;
   filmTitle: string;
   fileSlug: string;
+  detailLine?: string;
 }
 
 export interface PreparedCard {
@@ -126,13 +127,13 @@ export async function renderCard(snapshot: CardSnapshot): Promise<PreparedCard> 
     );
   }
 
-  const shade = ctx.createLinearGradient(0, 860, 0, HEIGHT);
+  const shade = ctx.createLinearGradient(0, 740, 0, HEIGHT);
   shade.addColorStop(0, 'rgba(12, 10, 8, 0)');
-  shade.addColorStop(0.22, 'rgba(12, 10, 8, 0.9)');
-  shade.addColorStop(0.48, 'rgba(12, 10, 8, 0.97)');
+  shade.addColorStop(0.16, 'rgba(12, 10, 8, 0.55)');
+  shade.addColorStop(0.3, 'rgba(12, 10, 8, 0.94)');
   shade.addColorStop(1, '#0c0a08');
   ctx.fillStyle = shade;
-  ctx.fillRect(0, 860, WIDTH, HEIGHT - 860);
+  ctx.fillRect(0, 740, WIDTH, HEIGHT - 740);
 
   ctx.textAlign = 'center';
   ctx.textBaseline = 'alphabetic';
@@ -151,39 +152,44 @@ export async function renderCard(snapshot: CardSnapshot): Promise<PreparedCard> 
     drawCentered(ctx, snapshot.filmTitle, 150, 920, 62);
   }
 
-  let y = 1020;
+  let y = 1088;
 
-  ctx.fillStyle = snapshot.accent;
+  ctx.fillStyle = '#f4efe6';
   ctx.font = `600 40px "${FONT_DISPLAY}", sans-serif`;
-  y = drawCentered(ctx, snapshot.districtTitle, y + 12, 900, 48);
+  y = drawCentered(ctx, snapshot.districtTitle, y, 900, 48);
 
   if (symbol) {
-    const size = 132;
-    ctx.drawImage(symbol, (WIDTH - size) / 2, y, size, size);
-    y += size + 28;
+    const size = 120;
+    const logoTop = y - 36;
+    ctx.drawImage(symbol, (WIDTH - size) / 2, logoTop, size, size);
+    y = logoTop + size + 40;
   }
 
   ctx.fillStyle = '#d9cbb8';
   ctx.font = `400 30px "${FONT_BODY}", sans-serif`;
-  y = drawCentered(ctx, snapshot.tagline, y, 860, 40);
+  y = drawCentered(ctx, snapshot.tagline, y, 860, 48);
+  if (snapshot.detailLine) {
+    ctx.font = `400 28px "${FONT_BODY}", sans-serif`;
+    y = drawCentered(ctx, snapshot.detailLine, y + 18, 860, 44);
+  }
 
   ctx.fillStyle = '#f4efe6';
   ctx.font = `700 68px "${FONT_DISPLAY}", sans-serif`;
-  y = drawCentered(ctx, snapshot.characteristicName, y + 18, 900, 78);
+  y = drawCentered(ctx, snapshot.characteristicName, y + 40, 900, 88);
 
   ctx.fillStyle = '#f4efe6';
   ctx.font = `400 34px "${FONT_BODY}", sans-serif`;
-  y = drawCentered(ctx, snapshot.phrase, y + 6, 880, 46);
-  y = drawCentered(ctx, snapshot.explanation, y + 8, 880, 46);
+  y = drawCentered(ctx, snapshot.phrase, y + 24, 880, 52);
+  y = drawCentered(ctx, snapshot.explanation, y + 22, 880, 52);
 
   if (itemIcon) {
     const size = 88;
-    ctx.drawImage(itemIcon, WIDTH / 2 - 180, y + 8, size, size);
+    ctx.drawImage(itemIcon, WIDTH / 2 - 180, y + 20, size, size);
   }
   ctx.fillStyle = '#f4efe6';
   ctx.font = `600 36px "${FONT_DISPLAY}", sans-serif`;
   ctx.textAlign = 'left';
-  ctx.fillText(snapshot.itemName, WIDTH / 2 - 76, y + 64);
+  ctx.fillText(snapshot.itemName, WIDTH / 2 - 76, y + 78);
   ctx.textAlign = 'center';
 
   const blob = await canvasToBlob(canvas);

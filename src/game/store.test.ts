@@ -40,6 +40,19 @@ describe('game store', () => {
     expect(useStore.getState().isDrawing).toBe(false);
 
     useStore.getState().prepare();
+    expect(useStore.getState().screen).toBe('outfit');
+    useStore.getState().selectOutfit('wedding');
+    useStore.getState().confirmOutfit();
+    expect(useStore.getState().outfit).toBe('wedding');
+    useStore.getState().openSkill();
+    expect(useStore.getState().screen).toBe('skill');
+    expect(useStore.getState().offeredSkills).toEqual(['bullseye', 'vanish', 'mockingjay']);
+    useStore.getState().selectSkill('bullseye');
+    useStore.getState().confirmSkill();
+    expect(useStore.getState().score).toBe(8);
+    useStore.getState().revealScore();
+    expect(useStore.getState().screen).toBe('score');
+    useStore.getState().acceptGift();
     expect(useStore.getState().screen).toBe('item');
     useStore.getState().confirmItem();
     expect(useStore.getState().screen).toBe('item');
@@ -89,12 +102,15 @@ describe('game store', () => {
     expect(useStore.getState().attempt).toBe(2);
     expect(useStore.getState().district).toBeNull();
     expect(useStore.getState().drawn).toBe(false);
+    expect(useStore.getState().outfit).toBeNull();
+    expect(useStore.getState().skill).toBeNull();
+    expect(useStore.getState().score).toBeNull();
     expect(useStore.getState().item).toBeNull();
     expect(useStore.getState().strategy).toBeNull();
     expect(useStore.getState().activeTimeMs).toBe(0);
     expect(useStore.getState().completedAttempts).toEqual([1]);
-    expect(selectStep('item')).toBe(2);
-    expect(selectProgressLabel('result')).toBe('Шаг 4 из 4');
+    expect(selectStep('item')).toBe(5);
+    expect(selectProgressLabel('result')).toBe('Шаг 7 из 7');
   });
 
   it('does not persist the draw animation or an unconfirmed card', async () => {
@@ -102,11 +118,21 @@ describe('game store', () => {
     useStore.getState().startDraw();
     useStore.getState().finishDraw();
     useStore.getState().prepare();
+    useStore.getState().selectOutfit('suit');
+    useStore.getState().confirmOutfit();
+    useStore.getState().openSkill();
+    useStore.getState().selectSkill('bullseye');
+    useStore.getState().confirmSkill();
+    useStore.getState().revealScore();
+    useStore.getState().acceptGift();
     useStore.getState().selectItem('medkit');
 
     const saved = JSON.parse(storage.getItem(STORAGE_KEY) ?? '{}') as Record<string, unknown>;
     expect(saved.district).toBe(1);
     expect(saved.screen).toBe('item');
+    expect(saved.outfit).toBe('suit');
+    expect(saved.skill).toBe('bullseye');
+    expect(saved.score).toBe(8);
     expect(saved.item).toBeNull();
     expect(saved).not.toHaveProperty('pendingItem');
     expect(saved).not.toHaveProperty('isDrawing');
@@ -118,6 +144,10 @@ describe('game store', () => {
       screen: 'draw',
       district: 9,
       drawn: false,
+      outfit: null,
+      offeredSkills: [],
+      skill: null,
+      score: null,
       item: null,
       strategy: null,
       attempt: 2,

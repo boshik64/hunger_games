@@ -135,9 +135,9 @@
 }
 
 .ticks span {
-  width: 32px;
-  height: 2px;
-  background: rgba(247, 245, 243, 0.28);
+  width: 12px;
+  height: 3px;
+  background: rgba(247, 245, 243, 0.72);
 }
 
 .ticks span[data-on='true'] {
@@ -187,7 +187,10 @@
 }
 
 .copy {
+  width: 100%;
   min-width: 0;
+  margin-inline: auto;
+  text-align: center;
 }
 
 .screen[data-screen='item'] .brand,
@@ -238,7 +241,7 @@
 }
 
 .title {
-  margin: 0 0 8px;
+  margin: 0 auto 8px;
   max-width: 16ch;
   color: #f7f5f3;
   font-family: var(--font-display);
@@ -264,7 +267,7 @@
 .phrase,
 .explanation,
 .bridge {
-  margin: 0 0 8px;
+  margin: 0 auto 8px;
   line-height: 1.35;
 }
 
@@ -411,12 +414,26 @@
   border-radius: 14px;
 }
 
+.districtBadge {
+  height: 44px;
+  font-size: 0.72rem;
+}
+
 .badgeIcon {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  max-width: 40px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  max-width: 32px;
   border-radius: 10px;
+}
+
+.districtBlurb {
+  max-width: 34rem;
+  margin: 6px auto 0;
+  color: #f7f5f3;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  text-align: center;
 }
 
 .chip span {
@@ -562,7 +579,7 @@
   z-index: 30;
   display: grid;
   place-items: center;
-  background: rgba(8, 5, 12, 0.62);
+  background: #4a1768;
   perspective: 900px;
   animation: sealFade 900ms ease forwards;
 }
@@ -685,7 +702,7 @@
 
 @media (min-width: 840px) {
   .ticks span {
-    width: 48px;
+    width: 28px;
     height: 4px;
     background: rgba(247, 245, 243, 0.72);
   }
@@ -876,9 +893,24 @@
     pointer-events: none;
   }
 
+  .screen[data-screen='outfit'] .title,
+  .screen[data-screen='skill'] .title,
+  .screen[data-screen='score'] .title,
   .screen[data-screen='item'] .title,
   .screen[data-screen='strategy'] .title {
     line-height: 1.2;
+  }
+
+  .districtBadge {
+    height: 56px;
+    font-size: 0.92rem;
+  }
+
+  .badgeIcon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    max-width: 44px;
   }
 
   .screen[data-screen='draw'] .body[data-crest='gone'] .tagline {
@@ -900,52 +932,17 @@
   }
 
   .screen[data-screen='result'] .body {
-    justify-content: flex-end;
+    justify-content: center;
   }
 
   .screen[data-screen='result'] .copy {
-    width: min(100%, 760px);
-    max-width: 760px;
+    width: min(100%, 420px);
+    max-width: 420px;
     margin-inline: auto;
-    justify-content: flex-end;
   }
 
   .screen[data-screen='result'] .story {
-    display: none;
-  }
-
-  .screen[data-screen='result'] .results {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: min(100%, 720px);
-    margin: 0 auto 4vh;
-    text-align: center;
-  }
-
-  .screen[data-screen='result'] .results .districtLabel,
-  .screen[data-screen='result'] .results .tagline,
-  .screen[data-screen='result'] .results .characteristic,
-  .screen[data-screen='result'] .results .phrase,
-  .screen[data-screen='result'] .results .explanation {
-    margin-inline: auto;
-    text-align: center;
-  }
-
-  .screen[data-screen='result'] .results .tagline {
-    color: #f7f5f3;
-    font-size: clamp(1.05rem, 1.6vw, 1.35rem);
-    line-height: 1.3;
-  }
-
-  .screen[data-screen='result'] .results .characteristic {
-    line-height: 1.15;
-  }
-
-  .screen[data-screen='result'] .results .phrase,
-  .screen[data-screen='result'] .results .explanation {
-    max-width: 40rem;
-    line-height: 1.5;
   }
 
   .screen[data-screen='result'] .actions {
@@ -957,5 +954,50 @@
   .screen[data-screen='result'] .actions > * {
     flex: 1 1 0;
     width: auto !important;
+  }
+}
+
+.screen[data-screen='draw']:has(.body[data-crest='on']) .column {
+  justify-content: flex-start;
+}
+
+.screen[data-screen='draw'] .body[data-crest='on'] {
+  flex: 0 1 auto;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.screen[data-screen='draw'] .body[data-crest='on'] .brand {
+  flex: none;
+  width: min(78%, 460px);
+  margin-top: 18px;
+}
+
+.screen[data-screen='draw'] .body[data-crest='on'] .crest {
+  flex: none;
+  align-items: center;
+  width: min(100%, 440px);
+  height: min(36vh, 340px);
+  margin: 2vh auto 0;
+}
+
+.screen[data-screen='draw'] .body[data-crest='on'] .crestFrame {
+  width: min(100%, 38vh, 420px);
+}
+
+.screen[data-screen='draw'] .body[data-crest='on'] .copy {
+  flex: none;
+  width: min(100%, 680px);
+  margin: 18px auto 0;
+}
+
+@media (max-height: 760px) {
+  .screen[data-screen='draw'] .body[data-crest='on'] .brand {
+    width: min(64%, 320px);
+    margin-top: 8px;
+  }
+
+  .screen[data-screen='draw'] .body[data-crest='on'] .crestFrame {
+    width: min(100%, 26vh, 280px);
   }
 }

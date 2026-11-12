@@ -1,15 +1,22 @@
 import { useEffect, useState } from 'react';
 import { DrawScreen } from '../screens/DrawScreen';
 import { ItemScreen } from '../screens/ItemScreen';
+import { OutfitScreen } from '../screens/OutfitScreen';
 import { ResultScreen } from '../screens/ResultScreen';
+import { ScoreScreen } from '../screens/ScoreScreen';
+import { SkillScreen } from '../screens/SkillScreen';
 import { StrategyScreen } from '../screens/StrategyScreen';
 import { useGameStore } from '../game/store';
 import type { Screen } from '../game/types';
 import { DistrictSpin } from './DistrictSpin';
 import { VisualScreenProvider } from './visualScreen';
 
+const ORDER: Screen[] = ['draw', 'outfit', 'skill', 'score', 'item', 'strategy', 'result'];
+
 function holdsPreviousStep(previous: Screen, next: Screen) {
-  return (previous === 'draw' && next === 'item') || (previous === 'item' && next === 'strategy');
+  const from = ORDER.indexOf(previous);
+  const to = ORDER.indexOf(next);
+  return from >= 0 && to === from + 1;
 }
 
 export function ScreenRouter() {
@@ -45,7 +52,13 @@ export function ScreenRouter() {
 
   const visible = held ?? screen;
   const step =
-    visible === 'item' ? (
+    visible === 'outfit' ? (
+      <OutfitScreen />
+    ) : visible === 'skill' ? (
+      <SkillScreen />
+    ) : visible === 'score' ? (
+      <ScoreScreen />
+    ) : visible === 'item' ? (
       <ItemScreen />
     ) : visible === 'strategy' ? (
       <StrategyScreen />

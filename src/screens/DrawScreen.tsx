@@ -45,7 +45,7 @@ export function DrawScreen() {
             disabled={isDrawing}
             onClick={drawn ? prepare : startDraw}
           >
-            {drawn ? ru.draw.prepareBattle : ru.draw.action}
+            {drawn ? ru.draw.toParade : ru.draw.action}
           </ActionButton>
           {drawn ? null : <TicketLink />}
         </>
@@ -56,6 +56,7 @@ export function DrawScreen() {
           <p className={styles.districtLabel}>{ru.draw.yours}</p>
           <AssetImage id={district.symbolAssetId} alt="" className={styles.symbol} />
           <p className={styles.tagline}>{district.tagline}</p>
+          <p className={styles.districtBlurb}>{district.description}</p>
         </>
       ) : (
         <>

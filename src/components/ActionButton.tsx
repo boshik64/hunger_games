@@ -99,9 +99,14 @@ export function TicketLink({
       }}
     >
       <span className={styles.karoSticker} aria-hidden="true">
-        <span className={styles.karoStickerFace}>
-          <span>КАРО</span>
-        </span>
+        <img src={`${import.meta.env.BASE_URL}assets/karo-logo.svg`} alt="" />
+        <span
+          className={styles.karoShine}
+          style={{
+            maskImage: `url(${import.meta.env.BASE_URL}assets/karo-logo.svg)`,
+            WebkitMaskImage: `url(${import.meta.env.BASE_URL}assets/karo-logo.svg)`,
+          }}
+        />
       </span>
       {ru.tickets}
     </a>

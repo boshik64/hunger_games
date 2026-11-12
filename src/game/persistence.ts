@@ -1,4 +1,4 @@
-import type { ItemId, Screen, StrategyId } from './types';
+import type { ItemId, OutfitId, Screen, SkillId, StrategyId } from './types';
 
 export const STORAGE_KEY = 'kg:v1';
 export const PERSIST_VERSION = 1;
@@ -7,6 +7,10 @@ export interface PersistedSlice {
   screen: Screen;
   district: number | null;
   drawn: boolean;
+  outfit: OutfitId | null;
+  offeredSkills: SkillId[];
+  skill: SkillId | null;
+  score: number | null;
   item: ItemId | null;
   strategy: StrategyId | null;
   attempt: number;
@@ -54,7 +58,30 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 function isScreen(value: unknown): value is Screen {
-  return value === 'draw' || value === 'item' || value === 'strategy' || value === 'result';
+  return (
+    value === 'draw' ||
+    value === 'outfit' ||
+    value === 'skill' ||
+    value === 'score' ||
+    value === 'item' ||
+    value === 'strategy' ||
+    value === 'result'
+  );
+}
+
+function isOutfit(value: unknown): value is OutfitId {
+  return value === 'wedding' || value === 'fire' || value === 'suit';
+}
+
+function isSkill(value: unknown): value is SkillId {
+  return (
+    value === 'bullseye' ||
+    value === 'vanish' ||
+    value === 'mockingjay' ||
+    value === 'balance' ||
+    value === 'memory' ||
+    value === 'laugh'
+  );
 }
 
 function isItem(value: unknown): value is ItemId {
@@ -106,6 +133,18 @@ function recover(slice: PersistedSlice): PersistedSlice {
     next.screen = 'item';
   }
 
+  if (next.screen === 'outfit' && next.outfit != null) {
+    next.screen = 'skill';
+  }
+
+  if (next.screen === 'skill' && next.skill != null && next.score != null) {
+    next.screen = 'score';
+  }
+
+  if (next.screen === 'score' && (next.skill == null || next.score == null)) {
+    next.screen = 'skill';
+  }
+
   if (!next.drawn && next.screen !== 'draw') {
     next.screen = 'draw';
   }
@@ -127,6 +166,28 @@ export function parsePersisted(raw: string | null): PersistedSlice | null {
   if (!isScreen(data.screen) || !isDistrict(data.district) || typeof data.drawn !== 'boolean') {
     return null;
   }
+  const outfit = data.outfit === undefined ? null : data.outfit;
+  const skill = data.skill === undefined ? null : data.skill;
+  const score = data.score === undefined ? null : data.score;
+  const offeredSkills = data.offeredSkills === undefined ? [] : data.offeredSkills;
+  if (!(outfit === null || isOutfit(outfit))) return null;
+  if (!(skill === null || isSkill(skill))) return null;
+  if (
+    !(
+      score === null ||
+      (typeof score === 'number' && Number.isInteger(score) && score >= 8 && score <= 12)
+    )
+  ) {
+    return null;
+  }
+  if (
+    !Array.isArray(offeredSkills) ||
+    offeredSkills.length > 3 ||
+    !offeredSkills.every((entry) => isSkill(entry)) ||
+    new Set(offeredSkills).size !== offeredSkills.length
+  ) {
+    return null;
+  }
   if (!(data.item === null || isItem(data.item))) return null;
   if (!(data.strategy === null || isStrategy(data.strategy))) return null;
   if (typeof data.attempt !== 'number' || !Number.isInteger(data.attempt) || data.attempt < 1) {
@@ -146,6 +207,10 @@ export function parsePersisted(raw: string | null): PersistedSlice | null {
     screen: data.screen,
     district: data.district,
     drawn: data.drawn,
+    outfit,
+    offeredSkills,
+    skill,
+    score,
     item: data.item,
     strategy: data.strategy,
     attempt: data.attempt,
@@ -161,6 +226,10 @@ export function serializePersisted(slice: PersistedSlice): string {
     screen: slice.screen,
     district: slice.district,
     drawn: slice.drawn,
+    outfit: slice.outfit,
+    offeredSkills: slice.offeredSkills?.slice() ?? [],
+    skill: slice.skill,
+    score: slice.score,
     item: slice.item,
     strategy: slice.strategy,
     attempt: slice.attempt,

@@ -11,16 +11,22 @@ export function selectCharacteristic(id: CharacteristicId) {
   return ru.characteristics[id];
 }
 
-export function selectStep(screen: Screen): 1 | 2 | 3 | 4 {
+export function selectStep(screen: Screen): 1 | 2 | 3 | 4 | 5 | 6 | 7 {
   switch (screen) {
     case 'draw':
       return 1;
-    case 'item':
+    case 'outfit':
       return 2;
-    case 'strategy':
+    case 'skill':
       return 3;
-    case 'result':
+    case 'score':
       return 4;
+    case 'item':
+      return 5;
+    case 'strategy':
+      return 6;
+    case 'result':
+      return 7;
   }
 }
 

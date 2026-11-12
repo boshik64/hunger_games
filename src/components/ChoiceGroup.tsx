@@ -10,7 +10,7 @@ export interface ChoiceOption<T extends string> {
   id: T;
   name: string;
   text: string;
-  assetId: string;
+  assetId?: string;
 }
 
 export function ChoiceGroup<T extends string>({
@@ -27,7 +27,7 @@ export function ChoiceGroup<T extends string>({
   value: T | null;
   onChange: (id: T) => void;
   columns: 2 | 3;
-  layout?: 'list' | 'tiles';
+  layout?: 'list' | 'tiles' | 'cards';
   disabled?: boolean;
 }) {
   const screen = useGameStore((state) => state.screen);
@@ -89,12 +89,12 @@ export function ChoiceGroup<T extends string>({
             <Card
               size="sm"
               className={
-                layout === 'tiles'
-                  ? '!w-full !min-w-0 !flex-col !items-stretch !gap-2 !overflow-visible !rounded-none !bg-transparent !py-0 !text-inherit !shadow-none !ring-0'
-                  : '!w-full !flex-row !items-center !gap-3 !overflow-visible !rounded-none !bg-transparent !py-0 !text-inherit !shadow-none !ring-0 md:!flex-col md:!items-stretch'
+                layout === 'cards'
+                  ? '!w-full !min-w-0 !gap-2 !overflow-visible !rounded-none !bg-transparent !py-0 !text-inherit !shadow-none !ring-0'
+                  : '!w-full !min-w-0 !flex-col !items-center !justify-center !gap-2 !overflow-visible !rounded-none !bg-transparent !py-0 !text-center !text-inherit !shadow-none !ring-0'
               }
             >
-              <AssetImage id={option.assetId} alt="" />
+              {option.assetId ? <AssetImage id={option.assetId} alt="" /> : null}
               <CardHeader className="!px-0 !py-0">
                 <CardTitle className={styles.name}>{option.name}</CardTitle>
                 <CardDescription className={styles.desc}>{option.text}</CardDescription>

@@ -87,7 +87,7 @@ describe('copy', () => {
     expect(ru.service.linkCopyFailed).toBe('Не удалось скопировать ссылку');
     expect(ru.service.saveHint).toBe('Нажми и удерживай картинку, чтобы сохранить');
     expect(ru.service.selected).toBe('Выбрано');
-    expect(ru.service.progressStep(2)).toBe('Шаг 2 из 4');
+    expect(ru.service.progressStep(2)).toBe('Шаг 2 из 7');
   });
 
   it('lists 12 placeholder districts with AA accents', () => {

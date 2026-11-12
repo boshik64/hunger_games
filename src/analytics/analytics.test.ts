@@ -21,6 +21,13 @@ async function play(sessionId: string) {
   state.startDraw();
   state.finishDraw();
   state.prepare();
+  state.selectOutfit('wedding');
+  state.confirmOutfit();
+  state.openSkill();
+  state.selectSkill('bullseye');
+  state.confirmSkill();
+  state.revealScore();
+  state.acceptGift();
   state.selectItem('flask');
   state.confirmItem();
   state.selectStrategy('risk');
@@ -38,6 +45,9 @@ describe('analytics', () => {
     expect(names()).toEqual([
       'draw_start',
       'district_assigned',
+      'outfit_selected',
+      'skill_selected',
+      'sponsor_score_shown',
       'item_selected',
       'strategy_selected',
       'game_completed',
@@ -53,6 +63,9 @@ describe('analytics', () => {
     expect(names()).toEqual([
       'draw_start',
       'district_assigned',
+      'outfit_selected',
+      'skill_selected',
+      'sponsor_score_shown',
       'item_selected',
       'strategy_selected',
       'game_completed',
@@ -76,6 +89,13 @@ describe('analytics', () => {
     useStore.getState().startDraw();
     useStore.getState().finishDraw();
     useStore.getState().prepare();
+    useStore.getState().selectOutfit('fire');
+    useStore.getState().confirmOutfit();
+    useStore.getState().openSkill();
+    useStore.getState().selectSkill('bullseye');
+    useStore.getState().confirmSkill();
+    useStore.getState().revealScore();
+    useStore.getState().acceptGift();
     useStore.getState().selectItem('rope');
     useStore.getState().confirmItem();
     useStore.getState().selectStrategy('careful');
@@ -83,12 +103,18 @@ describe('analytics', () => {
     expect(names()).toEqual([
       'draw_start',
       'district_assigned',
+      'outfit_selected',
+      'skill_selected',
+      'sponsor_score_shown',
       'item_selected',
       'strategy_selected',
       'game_completed',
       'replay_click',
       'draw_start',
       'district_assigned',
+      'outfit_selected',
+      'skill_selected',
+      'sponsor_score_shown',
       'item_selected',
       'strategy_selected',
       'game_completed',

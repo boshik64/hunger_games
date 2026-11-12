@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 import { persist, type PersistStorage, type StorageValue } from 'zustand/middleware';
-import type { ItemId, StrategyId } from './types';
+import type { ItemId, OutfitId, SkillId, StrategyId } from './types';
 import type { GameState, GameStore } from './types';
 import { track } from '../analytics/analytics';
 import { eventParams } from '../analytics/params';
-import { drawDistrict, type Uint32Source } from './random';
+import { drawDistrict, drawScore, drawSkills, type Uint32Source } from './random';
 import {
   STORAGE_KEY,
   PERSIST_VERSION,
@@ -27,6 +27,12 @@ function createInitialState(sessionId: string): GameState {
     district: null,
     drawn: false,
     isDrawing: false,
+    outfit: null,
+    pendingOutfit: null,
+    offeredSkills: [],
+    skill: null,
+    pendingSkill: null,
+    score: null,
     item: null,
     strategy: null,
     pendingItem: null,
@@ -46,6 +52,10 @@ function pickPersisted(state: GameState): PersistedSlice {
     screen: state.screen,
     district: state.district,
     drawn: state.drawn,
+    outfit: state.outfit,
+    offeredSkills: state.offeredSkills,
+    skill: state.skill,
+    score: state.score,
     item: state.item,
     strategy: state.strategy,
     attempt: state.attempt,
@@ -119,6 +129,74 @@ export function createGameStore(options: CreateGameStoreOptions = {}) {
         prepare: () => {
           const state = get();
           if (blocked(state) || state.screen !== 'draw' || !state.drawn) return;
+          set({ screen: 'outfit', ...seal(state) });
+        },
+
+        selectOutfit: (outfit: OutfitId) => {
+          const state = get();
+          if (blocked(state) || state.screen !== 'outfit' || state.outfit != null) return;
+          set({ pendingOutfit: outfit });
+        },
+
+        confirmOutfit: () => {
+          const state = get();
+          if (blocked(state) || state.screen !== 'outfit' || state.pendingOutfit == null) return;
+          set({ outfit: state.pendingOutfit, pendingOutfit: null });
+          const next = get();
+          track('outfit_selected', eventParams(next), next.sessionId);
+        },
+
+        openSkill: () => {
+          const state = get();
+          if (blocked(state) || state.screen !== 'outfit' || state.outfit == null) return;
+          const offeredSkills =
+            state.offeredSkills.length === 3 ? state.offeredSkills : drawSkills(options.rng);
+          set({ screen: 'skill', offeredSkills, ...seal(state) });
+        },
+
+        ensureSkills: () => {
+          const state = get();
+          if (state.offeredSkills.length === 3) return;
+          if (state.screen !== 'skill') return;
+          set({ offeredSkills: drawSkills(options.rng) });
+        },
+
+        selectSkill: (skill: SkillId) => {
+          const state = get();
+          if (blocked(state) || state.screen !== 'skill' || state.skill != null) return;
+          if (!state.offeredSkills.includes(skill)) return;
+          set({ pendingSkill: skill });
+        },
+
+        confirmSkill: () => {
+          const state = get();
+          if (blocked(state) || state.screen !== 'skill' || state.pendingSkill == null) return;
+          set({
+            skill: state.pendingSkill,
+            score: state.score ?? drawScore(options.rng),
+            pendingSkill: null,
+          });
+          const next = get();
+          track(
+            'skill_selected',
+            { ...eventParams(next), skills: next.offeredSkills },
+            next.sessionId,
+          );
+        },
+
+        revealScore: () => {
+          const state = get();
+          if (blocked(state) || state.screen !== 'skill' || state.skill == null || state.score == null) {
+            return;
+          }
+          set({ screen: 'score', ...seal(state) });
+          const next = get();
+          track('sponsor_score_shown', eventParams(next), next.sessionId);
+        },
+
+        acceptGift: () => {
+          const state = get();
+          if (blocked(state) || state.screen !== 'score' || state.score == null) return;
           set({ screen: 'item', ...seal(state) });
         },
 
@@ -184,12 +262,17 @@ export function createGameStore(options: CreateGameStoreOptions = {}) {
             drawn: false,
             isDrawing: false,
             attempt: state.attempt + 1,
+            outfit: null,
+            pendingOutfit: null,
+            offeredSkills: [],
+            skill: null,
+            pendingSkill: null,
+            score: null,
             item: null,
             strategy: null,
             pendingItem: null,
             pendingStrategy: null,
             activeTimeMs: 0,
-            ...seal(state),
           });
         },
 
@@ -211,6 +294,8 @@ export function createGameStore(options: CreateGameStoreOptions = {}) {
             ...(slice ?? {}),
             isDrawing: false,
             isTransitioning: false,
+            pendingOutfit: null,
+            pendingSkill: null,
             pendingItem: null,
             pendingStrategy: null,
           };

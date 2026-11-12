@@ -26,6 +26,7 @@ export function ScreenFrame({
   const isDrawing = useGameStore((state) => state.isDrawing);
   const drawn = useGameStore((state) => state.drawn);
   const districtId = useGameStore((state) => state.district);
+  const item = useGameStore((state) => state.item);
   const district = districtId == null ? undefined : getDistrict(districtId);
   const step = selectStep(screen);
   const [crestPhase, setCrestPhase] = useState<CrestPhase>(() =>
@@ -106,7 +107,7 @@ export function ScreenFrame({
         <header className={styles.header}>
           <div className={styles.progress}>
             <div className={styles.ticks} aria-hidden="true">
-              {[1, 2, 3, 4].map((mark) => (
+              {[1, 2, 3, 4, 5, 6, 7].map((mark) => (
                 <span key={mark} data-on={mark <= step} />
               ))}
             </div>
@@ -114,19 +115,25 @@ export function ScreenFrame({
           </div>
           <div className={styles.tools}>
             <SoundToggle />
-            {district ? (
+            {district && screen !== 'draw' ? (
               <Badge
                 variant="outline"
                 style={{ borderRadius: 999 }}
-                className="!h-12 !gap-2 !overflow-hidden !border-white/25 !bg-[rgba(120,92,140,0.4)] !pl-1.5 !pr-3 !text-[0.72rem] !tracking-[0.14em] !text-white !uppercase"
+                className={`${styles.districtBadge} !gap-2 !overflow-hidden !border-white/25 !bg-[rgba(120,92,140,0.55)] !pl-1.5 !pr-4 !tracking-[0.12em] !text-white !uppercase`}
               >
                 <AssetImage id={district.symbolAssetId} alt="" className={styles.badgeIcon} />
+                {item && (screen === 'strategy' || screen === 'result') ? (
+                  <AssetImage id={`item.${item}`} alt="" className={styles.badgeIcon} />
+                ) : null}
                 <span>{district.title}</span>
               </Badge>
             ) : null}
           </div>
         </header>
         <div className={styles.body} data-crest={screen === 'draw' ? crestPhase : undefined}>
+          {screen === 'draw' && !drawn ? (
+            <AssetImage id="wordmark.film" alt={ru.filmTitle} className={styles.brand} />
+          ) : null}
           {screen === 'draw' && crestPhase !== 'gone' ? (
             <div className={styles.crest}>
               <div
@@ -153,9 +160,6 @@ export function ScreenFrame({
             </div>
           ) : null}
           <div className={styles.copy} ref={copyRef}>
-            {screen === 'draw' && !drawn ? (
-              <AssetImage id="wordmark.film" alt={ru.filmTitle} className={styles.brand} />
-            ) : null}
             <h1 className={styles.title}>{title}</h1>
             {children}
           </div>
