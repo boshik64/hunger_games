@@ -99,14 +99,18 @@ export function TicketLink({
       }}
     >
       <span className={styles.karoSticker} aria-hidden="true">
-        <img src={`${import.meta.env.BASE_URL}assets/karo-logo.svg`} alt="" />
-        <span
-          className={styles.karoShine}
-          style={{
-            maskImage: `url(${import.meta.env.BASE_URL}assets/karo-logo.svg)`,
-            WebkitMaskImage: `url(${import.meta.env.BASE_URL}assets/karo-logo.svg)`,
-          }}
-        />
+        <span className={styles.karoPlate}>
+          <span className={styles.karoMark}>
+            <img src={`${import.meta.env.BASE_URL}assets/karo-logo.svg`} alt="" />
+            <span
+              className={styles.karoShine}
+              style={{
+                maskImage: `url(${import.meta.env.BASE_URL}assets/karo-logo.svg)`,
+                WebkitMaskImage: `url(${import.meta.env.BASE_URL}assets/karo-logo.svg)`,
+              }}
+            />
+          </span>
+        </span>
       </span>
       {ru.tickets}
     </a>

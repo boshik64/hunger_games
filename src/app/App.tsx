@@ -1,4 +1,5 @@
 import { useEffect, useSyncExternalStore } from 'react';
+import { getAsset } from '../assets/manifest';
 import { track } from '../analytics/analytics';
 import { eventParams } from '../analytics/params';
 import { useGameStore } from '../game/store';
@@ -40,11 +41,7 @@ export function App() {
         aria-hidden="true"
       />
       {hydrated && screen === 'result' ? (
-        <img
-          className={styles.resultStill}
-          src={`${import.meta.env.BASE_URL}assets/final/scene-strategy.webp`}
-          alt=""
-        />
+        <img className={styles.resultStill} src={getAsset('still.result.wide').src} alt="" />
       ) : null}
       {hydrated ? <ScreenRouter /> : <div className={styles.boot} />}
     </div>

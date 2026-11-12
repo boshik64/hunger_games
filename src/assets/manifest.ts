@@ -147,6 +147,13 @@ export const ASSETS: Record<string, AssetEntry> = {
     960,
     400,
   ),
+  'still.result.wide': final(
+    'still.result.wide',
+    'bg-layer',
+    'assets/final/stills/result-wide.webp',
+    1680,
+    701,
+  ),
   'item.flask': final('item.flask', 'item-icon', 'assets/final/item-flask.svg', 256, 256),
   'item.rope': final('item.rope', 'item-icon', 'assets/final/item-rope.svg', 256, 256),
   'item.medkit': final('item.medkit', 'item-icon', 'assets/final/item-medkit.svg', 256, 256),

@@ -99,10 +99,9 @@ export async function renderCard(snapshot: CardSnapshot): Promise<PreparedCard> 
   ]);
 
   const symbolId = `district.symbol.${snapshot.district}`;
-  const [background, symbol, itemIcon, wordmark] = await Promise.all([
+  const [background, symbol, wordmark] = await Promise.all([
     loadImage(getAsset('card.bg').src),
     loadImage(getAsset(symbolId).src),
-    loadImage(getAsset(`item.${snapshot.itemId}`).src),
     loadImage(getAsset('wordmark.film').src),
   ]);
 
@@ -152,45 +151,35 @@ export async function renderCard(snapshot: CardSnapshot): Promise<PreparedCard> 
     drawCentered(ctx, snapshot.filmTitle, 150, 920, 62);
   }
 
-  let y = 1088;
+  let y = 1120;
 
   ctx.fillStyle = '#f4efe6';
   ctx.font = `600 40px "${FONT_DISPLAY}", sans-serif`;
-  y = drawCentered(ctx, snapshot.districtTitle, y, 900, 48);
+  y = drawCentered(ctx, snapshot.districtTitle, y, 900, 46);
 
   if (symbol) {
-    const size = 120;
-    const logoTop = y - 36;
+    const size = 108;
+    const logoTop = y - 30;
     ctx.drawImage(symbol, (WIDTH - size) / 2, logoTop, size, size);
-    y = logoTop + size + 40;
+    y = logoTop + size + 28;
   }
 
   ctx.fillStyle = '#d9cbb8';
   ctx.font = `400 30px "${FONT_BODY}", sans-serif`;
-  y = drawCentered(ctx, snapshot.tagline, y, 860, 48);
+  y = drawCentered(ctx, snapshot.tagline, y, 860, 42);
   if (snapshot.detailLine) {
     ctx.font = `400 28px "${FONT_BODY}", sans-serif`;
-    y = drawCentered(ctx, snapshot.detailLine, y + 18, 860, 44);
+    y = drawCentered(ctx, snapshot.detailLine, y + 10, 860, 40);
   }
 
   ctx.fillStyle = '#f4efe6';
-  ctx.font = `700 68px "${FONT_DISPLAY}", sans-serif`;
-  y = drawCentered(ctx, snapshot.characteristicName, y + 40, 900, 88);
+  ctx.font = `700 64px "${FONT_DISPLAY}", sans-serif`;
+  y = drawCentered(ctx, snapshot.characteristicName, y + 22, 900, 76);
 
   ctx.fillStyle = '#f4efe6';
   ctx.font = `400 34px "${FONT_BODY}", sans-serif`;
-  y = drawCentered(ctx, snapshot.phrase, y + 24, 880, 52);
-  y = drawCentered(ctx, snapshot.explanation, y + 22, 880, 52);
-
-  if (itemIcon) {
-    const size = 88;
-    ctx.drawImage(itemIcon, WIDTH / 2 - 180, y + 20, size, size);
-  }
-  ctx.fillStyle = '#f4efe6';
-  ctx.font = `600 36px "${FONT_DISPLAY}", sans-serif`;
-  ctx.textAlign = 'left';
-  ctx.fillText(snapshot.itemName, WIDTH / 2 - 76, y + 78);
-  ctx.textAlign = 'center';
+  y = drawCentered(ctx, snapshot.phrase, y + 14, 880, 46);
+  drawCentered(ctx, snapshot.explanation, y + 12, 880, 46);
 
   const blob = await canvasToBlob(canvas);
   const filename = `hunger-games-d${snapshot.district}-${snapshot.fileSlug}.png`;

@@ -809,6 +809,7 @@
 
 .screen[data-screen='result'] .body {
   justify-content: center;
+  overflow: visible;
   padding: 4px 16px 0;
 }
 
@@ -842,13 +843,33 @@
   height: 100%;
 }
 
+.screen[data-screen='result'] .scrim {
+  background: transparent;
+}
+
+.screen[data-screen='result'] .story {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
 .screen[data-screen='result'] .cardPreview,
 .screen[data-screen='result'] .skeleton {
   width: 100%;
   height: 100%;
   max-height: none;
   aspect-ratio: auto;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.screen[data-screen='result'] .actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.screen[data-screen='result'] .actions > :nth-child(3) {
+  grid-column: 1 / -1;
 }
 
 .sharePop {
@@ -942,10 +963,17 @@
   }
 
   .screen[data-screen='result'] .story {
+    position: static;
     display: flex;
   }
 
+  .screen[data-screen='result'] .cardPreview,
+  .screen[data-screen='result'] .skeleton {
+    object-fit: contain;
+  }
+
   .screen[data-screen='result'] .actions {
+    display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
