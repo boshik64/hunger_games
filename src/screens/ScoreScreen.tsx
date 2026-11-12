@@ -19,7 +19,7 @@ export function ScoreScreen() {
         </ActionButton>
       }
     >
-      <p className={styles.lede}>{comment}</p>
+      {comment ? <p className={styles.lede}>{`«${comment}»`}</p> : null}
       <p className={styles.note}>{ru.score.sponsor}</p>
     </ScreenFrame>
   );

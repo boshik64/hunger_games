@@ -97,7 +97,9 @@ export function ChoiceGroup<T extends string>({
               {option.assetId ? <AssetImage id={option.assetId} alt="" /> : null}
               <CardHeader className="!px-0 !py-0">
                 <CardTitle className={styles.name}>{option.name}</CardTitle>
-                <CardDescription className={styles.desc}>{option.text}</CardDescription>
+                {option.text ? (
+                  <CardDescription className={styles.desc}>{option.text}</CardDescription>
+                ) : null}
               </CardHeader>
             </Card>
             {checked ? (

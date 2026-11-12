@@ -469,6 +469,10 @@
     object-position: center;
   }
 
+  .list[data-layout='tiles'] .choice img[src*='outfit-wedding'] {
+    object-position: center top;
+  }
+
   .choice :global([data-slot='card']) {
     flex-direction: column;
     align-items: stretch;

@@ -46,7 +46,7 @@ export function SkillScreen() {
   const options = offeredSkills.map((id) => ({
     id,
     name: ru.skill.options[id].name,
-    text: ru.skill.options[id].comment,
+    text: '',
     assetId: skillArt[id],
   }));
 

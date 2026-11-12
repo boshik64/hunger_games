@@ -74,15 +74,15 @@ export const ASSETS: Record<string, AssetEntry> = {
     'still.outfit.wedding',
     'bg-layer',
     'assets/final/stills/outfit-wedding.webp',
-    960,
     640,
+    460,
   ),
   'still.outfit.fire': final(
     'still.outfit.fire',
     'bg-layer',
     'assets/final/stills/outfit-fire.webp',
-    960,
-    399,
+    472,
+    330,
   ),
   'still.outfit.suit': final(
     'still.outfit.suit',

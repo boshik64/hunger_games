@@ -922,6 +922,13 @@
     line-height: 1.2;
   }
 
+  .sound {
+    height: 56px;
+    min-height: 56px;
+    padding: 0 18px;
+    font-size: 0.92rem;
+  }
+
   .districtBadge {
     height: 56px;
     font-size: 0.92rem;
