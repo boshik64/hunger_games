@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AssetImage } from '../components/AssetImage';
-import { ActionButton, TicketLink } from '../components/ActionButton';
+import { ActionButton, RewardLink, TicketLink } from '../components/ActionButton';
 import { ScreenFrame } from '../components/ScreenFrame';
 import { getDistrict } from '../content/districts';
 import { ru } from '../content/ru';
@@ -47,7 +47,12 @@ export function DrawScreen() {
           >
             {drawn ? ru.draw.toParade : ru.draw.action}
           </ActionButton>
-          {drawn ? null : <TicketLink />}
+          {drawn ? null : (
+            <>
+              <RewardLink locked={isDrawing} variant="secondary" />
+              <TicketLink locked={isDrawing} />
+            </>
+          )}
         </>
       }
     >

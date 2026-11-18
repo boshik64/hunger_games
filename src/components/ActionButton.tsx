@@ -141,7 +141,9 @@ export function RewardLink({
           return;
         }
         countClick(ru.result.rewardCta, screen);
-        track('reward_cta_click', { ...eventParams(useGameStore.getState()), screen: 'result' });
+        if (screen === 'draw' || screen === 'result') {
+          track('reward_cta_click', { ...eventParams(useGameStore.getState()), screen });
+        }
       }}
     >
       {ru.result.rewardCta}
