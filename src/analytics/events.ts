@@ -16,6 +16,7 @@ export const CLICK_EVENTS = [
   'share_click',
   'card_download',
   'ticket_cta_click',
+  'reward_cta_click',
 ] as const;
 
 export type StepEvent = (typeof STEP_EVENTS)[number];

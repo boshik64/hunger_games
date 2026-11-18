@@ -4,5 +4,6 @@
 - Кнопки, карточки выбора, бейдж дистрикта, прогресс и нижняя панель шаринга собраны на компонентах shadcn.
 - «Выбрать сеанс» на жеребьёвке и на результате ведёт на `VITE_TICKETS_URL` и не блокируется во время жеребьёвки.
 - Карточка 1080×1920 рисуется на canvas из того же состояния, что и экран. Шаринг вызывает `navigator.share` с файлом и текстом; если шаринг недоступен, открывается панель «Скачать карточку» / «Скопировать ссылку».
-- События `landing_view`, `draw_start`, `district_assigned`, `item_selected`, `strategy_selected`, `game_completed`, `replay_click`, `share_click`, `card_download`, `ticket_cta_click` уходят в `dataLayer`. Повтор шага в той же попытке и повторный тап короче 500 мс не дублируются. Перезагрузка сессии события не шлёт.
+- События `landing_view`, `draw_start`, `district_assigned`, `item_selected`, `strategy_selected`, `game_completed`, `replay_click`, `share_click`, `card_download`, `ticket_cta_click`, `reward_cta_click` уходят в `dataLayer`. Повтор шага в той же попытке и повторный тап короче 500 мс не дублируются. Перезагрузка сессии события не шлёт.
+- Розыгрыш `/reward` открывается по прямой ссылке со стороны и с кнопки на результате («Твоя награда в играх!»). Код брони — ровно 7 символов; капча обязательна; повтор того же кода даёт ошибку дубликата; после успеха — «код принят», без мгновенного приза. Участники появляются в `raffle-participants.json` при `pnpm dev` или `pnpm start`.
 - `pnpm test`, `pnpm run typecheck`, `pnpm run lint`, `pnpm run check:assets`.

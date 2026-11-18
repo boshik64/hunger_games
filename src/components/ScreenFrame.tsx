@@ -42,8 +42,11 @@ export function ScreenFrame({
     if (screen !== 'draw') return;
     if (!isDrawing && !drawn) {
       phaseRef.current = 'on';
+      /* Crest FLIP reset when draw restarts */
+      /* eslint-disable react-hooks/set-state-in-effect -- crest FLIP phases */
       setCrestPhase('on');
       setFlightBox(null);
+      /* eslint-enable react-hooks/set-state-in-effect */
       const copy = copyRef.current;
       if (copy) {
         copy.style.transition = '';

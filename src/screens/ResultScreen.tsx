@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ActionButton, ShareLink, TicketLink } from '../components/ActionButton';
+import { ActionButton, RewardLink, ShareLink, TicketLink } from '../components/ActionButton';
 import { ScreenFrame } from '../components/ScreenFrame';
 import { countClick } from '../analytics/counters';
 import { renderCard, type PreparedCard } from '../card/renderCard';
@@ -110,7 +110,8 @@ export function ResultScreen() {
           >
             {ru.result.restart}
           </ActionButton>
-          <TicketLink locked={isTransitioning} variant="primary" />
+          <RewardLink locked={isTransitioning} variant="primary" />
+          <TicketLink locked={isTransitioning} variant="secondary" />
         </>
       }
     >

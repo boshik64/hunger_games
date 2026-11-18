@@ -60,6 +60,10 @@ describe('copy', () => {
     expect(ru.result.share).toBe('Поделиться результатом');
     expect(ru.download).toBe('Скачать карточку');
     expect(ru.result.replay).toBe('Пройти ещё раз');
+    expect(ru.result.rewardCta).toBe('Твоя награда в играх!');
+    expect(ru.reward.title).toBe('Твоя награда в играх!');
+    expect(ru.reward.fund).toHaveLength(8);
+    expect(ru.reward.supers.map((item) => item.name)).toEqual(['ГОД КИНО', 'ГОД ПОПКОРНА']);
 
     expect(ru.share.text).toBe('Узнай свой дистрикт и проверь, как пройдёшь испытание на арене');
     expect(ru.share.copyLink).toBe('Скопировать ссылку');

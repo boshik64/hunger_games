@@ -17,6 +17,7 @@
 ```bash
 pnpm dev
 pnpm build          # tsc --noEmit && vite build
+pnpm start          # dist + API розыгрыша → raffle-participants.json
 pnpm test
 pnpm run typecheck
 pnpm run lint
@@ -28,9 +29,9 @@ Env (см. `.env.example`): `VITE_SITE_URL`, `VITE_TICKETS_URL`, `VITE_ANALYTICS
 
 ## Поток экранов
 
-Порядок жёсткий (не URL-роуты — только `state.screen`):
+Порядок игры жёсткий (шаги — только `state.screen`; отдельно публичный URL `/reward`):
 
-`draw → outfit → skill → score → item → strategy → result`
+`draw → outfit → skill → score → item → strategy → result` (+ `/reward`)
 
 | Экран | Выбор | Ключевые действия стора |
 |---|---|---|
@@ -40,7 +41,7 @@ Env (см. `.env.example`): `VITE_SITE_URL`, `VITE_TICKETS_URL`, `VITE_ANALYTICS
 | score | оценка 8..12 | `acceptGift` |
 | item | flask / rope / medkit | `selectItem` → `confirmItem` |
 | strategy | risk / careful | `selectStrategy` → `confirmStrategy` |
-| result | шаринг / билеты / replay | `replay` сбрасывает всё, включая дистрикт |
+| result | шаринг / розыгрыш `/reward` / билеты / replay | `replay` сбрасывает всё, включая дистрикт |
 
 Характеристика результата **не** в сторе: только `resolveResult(item, strategy)` из `src/content/results.ts` (6 комбинаций → strategist / daredevil / tactician / survivor).
 

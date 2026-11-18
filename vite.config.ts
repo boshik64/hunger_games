@@ -4,9 +4,11 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 // @ts-expect-error the plugin file is JavaScript and has no declaration
 import statsPlugin from './scripts/stats-plugin.mjs';
+// @ts-expect-error the plugin file is JavaScript and has no declaration
+import rafflePlugin from './scripts/raffle-plugin.mjs';
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), statsPlugin()],
+  plugins: [react(), tailwindcss(), statsPlugin(), rafflePlugin()],
   resolve: {
     alias: {
       '@': new URL('./src', import.meta.url).pathname,

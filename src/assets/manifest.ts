@@ -2,6 +2,7 @@ export type AssetKind =
   | 'bg-layer'
   | 'district-symbol'
   | 'item-icon'
+  | 'prize-icon'
   | 'strategy-art'
   | 'logo'
   | 'wordmark'
@@ -157,6 +158,58 @@ export const ASSETS: Record<string, AssetEntry> = {
   'item.flask': final('item.flask', 'item-icon', 'assets/final/item-flask.svg', 256, 256),
   'item.rope': final('item.rope', 'item-icon', 'assets/final/item-rope.svg', 256, 256),
   'item.medkit': final('item.medkit', 'item-icon', 'assets/final/item-medkit.svg', 256, 256),
+  'prize.tickets2': final(
+    'prize.tickets2',
+    'prize-icon',
+    'assets/final/prize-tickets2.webp',
+    222,
+    173,
+  ),
+  'prize.ticket1': final('prize.ticket1', 'prize-icon', 'assets/final/prize-ticket1.webp', 177, 122),
+  'prize.popcorn': final('prize.popcorn', 'prize-icon', 'assets/final/prize-popcorn.webp', 130, 133),
+  'prize.discount': final(
+    'prize.discount',
+    'prize-icon',
+    'assets/final/prize-discount.webp',
+    193,
+    114,
+  ),
+  'prize.merch': final('prize.merch', 'prize-icon', 'assets/final/prize-merch.webp', 273, 192),
+  'prize.points300': final(
+    'prize.points300',
+    'prize-icon',
+    'assets/final/prize-points300.webp',
+    157,
+    150,
+  ),
+  'prize.points200': final(
+    'prize.points200',
+    'prize-icon',
+    'assets/final/prize-points200.webp',
+    157,
+    150,
+  ),
+  'prize.points100': final(
+    'prize.points100',
+    'prize-icon',
+    'assets/final/prize-points100.webp',
+    157,
+    150,
+  ),
+  'prize.yearCinema': final(
+    'prize.yearCinema',
+    'prize-icon',
+    'assets/final/prize-year-cinema.webp',
+    222,
+    173,
+  ),
+  'prize.yearPopcorn': final(
+    'prize.yearPopcorn',
+    'prize-icon',
+    'assets/final/prize-year-popcorn.webp',
+    130,
+    133,
+  ),
   'logo.karo': final('logo.karo', 'logo', 'assets/final/logo-karo.svg', 640, 160),
   'wordmark.film': final('wordmark.film', 'wordmark', 'assets/final/wordmark.svg', 990, 218),
   'card.bg': final('card.bg', 'card-bg', 'assets/final/card-bg.webp', 1080, 1620),

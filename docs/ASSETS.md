@@ -13,6 +13,7 @@
 | og.cover | public/og-cover.jpg | SOLSTICE_PayoffDueling_1920x1080_01.jpg, 1200×630 |
 | district.symbol.1–12 | public/assets/final/district-N.svg | оригинальные печати, `scripts/gen-marks.mjs` |
 | item.flask, item.rope, item.medkit | public/assets/final/item-*.svg | оригинальные иконки |
+| prize.tickets2 … prize.yearPopcorn | public/assets/final/prize-*.webp | иконки из `film_media/KARO_prize_icons_PNG` |
 | wordmark.film | public/assets/final/wordmark.svg | наборный титр названия |
 | logo.karo | public/assets/final/logo-karo.svg | наборное «КАРО», пока нет официального SVG |
 

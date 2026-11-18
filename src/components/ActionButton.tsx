@@ -7,7 +7,8 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet';
 import { cn } from 'cn';
-import { ticketsUrl } from '../config';
+import { Link } from 'react-router-dom';
+import { rewardPath, ticketsUrl } from '../config';
 import { ru } from '../content/ru';
 import { track } from '../analytics/analytics';
 import { countClick } from '../analytics/counters';
@@ -114,6 +115,37 @@ export function TicketLink({
       </span>
       {ru.tickets}
     </a>
+  );
+}
+
+export function RewardLink({
+  locked = false,
+  variant = 'secondary',
+}: {
+  locked?: boolean;
+  variant?: 'primary' | 'secondary';
+}) {
+  const screen = useGameStore((state) => state.screen);
+  return (
+    <Link
+      className={cn(
+        buttonVariants({ variant: 'outline', size: 'lg' }),
+        looks[variant],
+        '!overflow-visible',
+      )}
+      to={rewardPath}
+      aria-disabled={locked || undefined}
+      onClick={(event) => {
+        if (locked) {
+          event.preventDefault();
+          return;
+        }
+        countClick(ru.result.rewardCta, screen);
+        track('reward_cta_click', { ...eventParams(useGameStore.getState()), screen: 'result' });
+      }}
+    >
+      {ru.result.rewardCta}
+    </Link>
   );
 }
 
