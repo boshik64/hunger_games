@@ -62,6 +62,17 @@ export function RewardScreen() {
 
   return (
     <div className={styles.page}>
+      <video
+        className={styles.bgVideo}
+        src={`${import.meta.env.BASE_URL}video/draw.mp4?v=2`}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        disablePictureInPicture
+        aria-hidden="true"
+      />
       <div className={styles.scrim} aria-hidden="true" />
       <header className={styles.header}>
         <Link className={styles.back} to="/">
@@ -78,6 +89,20 @@ export function RewardScreen() {
         <p className={styles.copy}>{ru.reward.superNote}</p>
         <p className={styles.hint}>{ru.reward.ctaHint}</p>
 
+        <section className={styles.section} aria-labelledby="super-title">
+          <h2 id="super-title" className={styles.sectionTitle}>
+            {ru.reward.superTitle}
+          </h2>
+          <ul className={styles.supers}>
+            {ru.reward.supers.map((item) => (
+              <li key={item.name} className={styles.superItem}>
+                <AssetImage id={item.icon} alt="" className={styles.prizeIcon} />
+                <span className={styles.prizeName}>{item.name}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
         <section className={styles.section} aria-labelledby="fund-title">
           <h2 id="fund-title" className={styles.sectionTitle}>
             {ru.reward.fundTitle}
@@ -90,20 +115,6 @@ export function RewardScreen() {
                   <span className={styles.prizeName}>{item.name}</span>
                 </div>
                 <span className={styles.prizeCount}>{item.count}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className={styles.section} aria-labelledby="super-title">
-          <h2 id="super-title" className={styles.sectionTitle}>
-            {ru.reward.superTitle}
-          </h2>
-          <ul className={styles.supers}>
-            {ru.reward.supers.map((item) => (
-              <li key={item.name} className={styles.superItem}>
-                <AssetImage id={item.icon} alt="" className={styles.prizeIcon} />
-                <span className={styles.prizeName}>{item.name}</span>
               </li>
             ))}
           </ul>
