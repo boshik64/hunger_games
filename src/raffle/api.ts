@@ -2,20 +2,10 @@ import { isValidCode, normalizeCode } from './code';
 
 export type RaffleError = 'bad_captcha' | 'bad_code' | 'duplicate' | 'network' | 'invalid_json';
 
-export interface CaptchaChallenge {
-  id: string;
-  challenge: string;
-}
-
-export async function fetchCaptcha(): Promise<CaptchaChallenge> {
-  const response = await fetch('/api/raffle/captcha', { method: 'GET', cache: 'no-store' });
-  if (!response.ok) throw new Error('network');
-  return (await response.json()) as CaptchaChallenge;
-}
-
 export async function submitRaffle(input: {
   code: string;
-  captchaId: string;
+  captchaA: number;
+  captchaB: number;
   captchaAnswer: string;
 }): Promise<{ ok: true } | { ok: false; error: RaffleError }> {
   const code = normalizeCode(input.code);
@@ -27,10 +17,15 @@ export async function submitRaffle(input: {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
         code,
-        captchaId: input.captchaId,
+        captchaA: input.captchaA,
+        captchaB: input.captchaB,
         captchaAnswer: input.captchaAnswer,
       }),
     });
+    const contentType = response.headers.get('content-type') ?? '';
+    if (!contentType.includes('application/json')) {
+      return { ok: false, error: 'network' };
+    }
     const data = (await response.json().catch(() => ({}))) as { ok?: boolean; error?: RaffleError };
     if (response.ok && data.ok) return { ok: true };
     return { ok: false, error: data.error ?? 'network' };

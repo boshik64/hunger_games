@@ -54,7 +54,7 @@ export function createCaptcha() {
     answer: String(a + b),
     expiresAt: Date.now() + CAPTCHA_TTL_MS,
   });
-  return { id, challenge: `${a} + ${b}` };
+  return { id, challenge: `${a} + ${b}`, a, b };
 }
 
 function consumeCaptcha(id, answer) {
@@ -63,6 +63,21 @@ function consumeCaptcha(id, answer) {
   if (!entry) return false;
   challenges.delete(String(id));
   return String(answer ?? '').trim() === entry.answer;
+}
+
+/** Client-side math captcha: verify a + b without a server round-trip. */
+function checkLocalCaptcha(body) {
+  const a = Number(body.captchaA);
+  const b = Number(body.captchaB);
+  const answer = String(body.captchaAnswer ?? '').trim();
+  if (!Number.isInteger(a) || !Number.isInteger(b)) return false;
+  if (a < 2 || a > 9 || b < 1 || b > 9) return false;
+  return answer === String(a + b);
+}
+
+function checkCaptcha(body) {
+  if (body.captchaId) return consumeCaptcha(body.captchaId, body.captchaAnswer);
+  return checkLocalCaptcha(body);
 }
 
 function readBody(req) {
@@ -109,7 +124,7 @@ export async function handleRaffleRequest(req, res) {
       return true;
     }
 
-    if (!consumeCaptcha(body.captchaId, body.captchaAnswer)) {
+    if (!checkCaptcha(body)) {
       sendJson(res, 400, { ok: false, error: 'bad_captcha' });
       return true;
     }

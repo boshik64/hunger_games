@@ -1,11 +1,12 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from 'cn';
 import { AssetImage } from '../components/AssetImage';
 import { SoundToggle } from '../components/SoundToggle';
 import { ru } from '../content/ru';
-import { fetchCaptcha, submitRaffle, type RaffleError } from '../raffle/api';
+import { submitRaffle, type RaffleError } from '../raffle/api';
+import { createLocalCaptcha } from '../raffle/captcha';
 import { isValidCode, normalizeCode } from '../raffle/code';
 import styles from './reward.module.css';
 
@@ -16,40 +17,15 @@ type Status = 'idle' | 'submitting' | 'success';
 
 export function RewardScreen() {
   const [code, setCode] = useState('');
-  const [captchaId, setCaptchaId] = useState('');
-  const [challenge, setChallenge] = useState('');
+  const [captcha, setCaptcha] = useState(() => createLocalCaptcha());
   const [captchaAnswer, setCaptchaAnswer] = useState('');
   const [status, setStatus] = useState<Status>('idle');
   const [error, setError] = useState<RaffleError | null>(null);
 
-  const loadCaptcha = async () => {
-    try {
-      const next = await fetchCaptcha();
-      setCaptchaId(next.id);
-      setChallenge(next.challenge);
-      setCaptchaAnswer('');
-    } catch {
-      setError('network');
-    }
+  const refreshCaptcha = () => {
+    setCaptcha(createLocalCaptcha());
+    setCaptchaAnswer('');
   };
-
-  useEffect(() => {
-    let cancelled = false;
-    void (async () => {
-      try {
-        const next = await fetchCaptcha();
-        if (cancelled) return;
-        setCaptchaId(next.id);
-        setChallenge(next.challenge);
-        setCaptchaAnswer('');
-      } catch {
-        if (!cancelled) setError('network');
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -60,7 +36,7 @@ export function RewardScreen() {
       setError('bad_code');
       return;
     }
-    if (!captchaId || !captchaAnswer.trim()) {
+    if (!captchaAnswer.trim()) {
       setError('bad_captcha');
       return;
     }
@@ -69,7 +45,8 @@ export function RewardScreen() {
     setError(null);
     const result = await submitRaffle({
       code: normalized,
-      captchaId,
+      captchaA: captcha.a,
+      captchaB: captcha.b,
       captchaAnswer,
     });
     if (result.ok) {
@@ -80,7 +57,7 @@ export function RewardScreen() {
     }
     setStatus('idle');
     setError(result.error);
-    void loadCaptcha();
+    refreshCaptcha();
   };
 
   return (
@@ -157,10 +134,8 @@ export function RewardScreen() {
             <label className={styles.field}>
               <span>{ru.reward.captchaLabel}</span>
               <span className={styles.captchaRow}>
-                <span className={styles.challenge}>
-                  {challenge ? ru.reward.captchaHint(challenge) : '…'}
-                </span>
-                <button type="button" className={styles.refresh} onClick={() => void loadCaptcha()}>
+                <span className={styles.challenge}>{ru.reward.captchaHint(captcha.challenge)}</span>
+                <button type="button" className={styles.refresh} onClick={refreshCaptcha}>
                   {ru.reward.captchaRefresh}
                 </button>
               </span>
