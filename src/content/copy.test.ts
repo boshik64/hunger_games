@@ -61,9 +61,11 @@ describe('copy', () => {
     expect(ru.download).toBe('Скачать карточку');
     expect(ru.result.replay).toBe('Пройти ещё раз');
     expect(ru.result.rewardCta).toBe('Твоя награда в играх!');
-    expect(ru.reward.title).toBe('Твоя награда в играх!');
-    expect(ru.reward.fund).toHaveLength(8);
-    expect(ru.reward.supers.map((item) => item.name)).toEqual(['ГОД КИНО', 'ГОД ПОПКОРНА']);
+    expect(ru.reward.title).toBe('Акция «Твоя награда в Играх»');
+    expect(ru.reward.dates).toBe('Сроки проведения: 20.11–16.12.2026');
+    expect(ru.reward.supers).toHaveLength(11);
+    expect(ru.reward.supers[0]?.name).toBe('Год кино');
+    expect(ru.reward.supers[10]?.name).toBe('3 начисления по 1 000 баллов КАРОНА');
 
     expect(ru.share.text).toBe('Узнай свой дистрикт и проверь, как пройдёшь испытание на арене');
     expect(ru.share.copyLink).toBe('Скопировать ссылку');

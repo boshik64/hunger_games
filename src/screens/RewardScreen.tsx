@@ -81,13 +81,10 @@ export function RewardScreen() {
         <SoundToggle />
       </header>
       <main className={styles.main}>
-        <p className={styles.eyebrow}>{ru.reward.eyebrow}</p>
         <h1 className={styles.title}>{ru.reward.title}</h1>
+        <p className={styles.dates}>{ru.reward.dates}</p>
         <p className={styles.lead}>{ru.reward.lead}</p>
-        <p className={styles.copy}>{ru.reward.prompt}</p>
-        <p className={styles.copy}>{ru.reward.body}</p>
-        <p className={styles.copy}>{ru.reward.superNote}</p>
-        <p className={styles.hint}>{ru.reward.ctaHint}</p>
+        <p className={styles.hint}>{ru.reward.prompt}</p>
 
         <section className={styles.section} aria-labelledby="super-title">
           <h2 id="super-title" className={styles.sectionTitle}>
@@ -98,23 +95,6 @@ export function RewardScreen() {
               <li key={item.name} className={styles.superItem}>
                 <AssetImage id={item.icon} alt="" className={styles.prizeIcon} />
                 <span className={styles.prizeName}>{item.name}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className={styles.section} aria-labelledby="fund-title">
-          <h2 id="fund-title" className={styles.sectionTitle}>
-            {ru.reward.fundTitle}
-          </h2>
-          <ul className={styles.list}>
-            {ru.reward.fund.map((item) => (
-              <li key={item.name} className={styles.prizeRow}>
-                <div className={styles.prizeTicket}>
-                  <AssetImage id={item.icon} alt="" className={styles.prizeIcon} />
-                  <span className={styles.prizeName}>{item.name}</span>
-                </div>
-                <span className={styles.prizeCount}>{item.count}</span>
               </li>
             ))}
           </ul>

@@ -68,26 +68,25 @@
   gap: 14px;
 }
 
-.eyebrow {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #e0c0d8;
-}
-
 .title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 5vw, 2.2rem);
-  line-height: 1.15;
+  font-size: clamp(1.45rem, 4.6vw, 2rem);
+  line-height: 1.2;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
+.dates {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #e0c0d8;
+}
+
 .lead,
-.copy,
 .hint {
   margin: 0;
   line-height: 1.45;
@@ -117,52 +116,13 @@
   color: #e0c0d8;
 }
 
-.list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.prizeRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.prizeTicket {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  min-width: 0;
-}
-
 .prizeIcon {
   display: block;
   width: auto;
   height: 72px;
   max-width: 110px;
   object-fit: contain;
-  object-position: left center;
-}
-
-.prizeName {
-  max-width: 12.5rem;
-  color: #f7f5f3;
-  font-size: 0.9rem;
-  line-height: 1.25;
-}
-
-.prizeCount {
-  flex-shrink: 0;
-  color: rgba(224, 192, 216, 0.95);
-  font-size: 0.9rem;
-  line-height: 1.25;
-  text-align: right;
+  object-position: center;
 }
 
 .supers {
@@ -171,23 +131,51 @@
   list-style: none;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 16px 12px;
 }
 
 .superItem {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
   min-width: 0;
+  text-align: center;
+}
+
+/* 11 items / 2 cols → last prize centered on mobile */
+.superItem:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: min(100%, 11.5rem);
 }
 
 .superItem .prizeName {
   font-family: var(--font-display);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  font-size: 0.85rem;
+  font-size: 0.72rem;
+  line-height: 1.3;
+  color: #f7f5f3;
   max-width: none;
+}
+
+@media (min-width: 640px) {
+  .supers {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* 11 items / 3 cols → last two in columns 1 and 3 */
+  .superItem:nth-last-child(2) {
+    grid-column: 1;
+  }
+
+  .superItem:last-child,
+  .superItem:last-child:nth-child(odd) {
+    grid-column: 3;
+    justify-self: stretch;
+    width: auto;
+  }
 }
 
 .form {
