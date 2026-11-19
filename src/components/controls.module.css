@@ -53,6 +53,14 @@
   filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.35));
 }
 
+@media (max-width: 839px) {
+  .karoSticker {
+    top: 14px;
+    right: -18px;
+    width: 58px;
+  }
+}
+
 .karoPlate {
   position: relative;
   display: block;
