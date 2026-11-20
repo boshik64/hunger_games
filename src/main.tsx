@@ -5,9 +5,10 @@ import { App } from './app/App';
 import './assets/fonts';
 import './styles/global.css';
 import { bindActiveTime } from './analytics/activeTime';
-import { routerBasename, rewardPath } from './config';
+import { routerBasename, rewardPath, statsPath } from './config';
 import { useGameStore } from './game/store';
 import { RewardScreen } from './screens/RewardScreen';
+import { StatsScreen } from './screens/StatsScreen';
 
 const root = document.getElementById('root');
 if (!root) throw new Error('Root element #root is missing');
@@ -20,6 +21,7 @@ createRoot(root).render(
     <BrowserRouter basename={routerBasename()}>
       <Routes>
         <Route path={rewardPath} element={<RewardScreen />} />
+        <Route path={statsPath} element={<StatsScreen />} />
         <Route path="/*" element={<App />} />
       </Routes>
     </BrowserRouter>

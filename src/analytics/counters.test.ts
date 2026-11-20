@@ -19,4 +19,19 @@ describe('click counters', () => {
     expect(saved.counts['Фляга']).toBe(1);
     expect(saved.events.map((event) => event.screen)).toEqual(['draw', 'draw', 'item']);
   });
+
+  it('still reports the click when local storage rejects the write', () => {
+    const spy = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('quota');
+    });
+    countClick('Звук', 'draw');
+    expect(fetch).toHaveBeenCalledWith(
+      '/api/stats',
+      expect.objectContaining({
+        method: 'POST',
+        body: expect.stringContaining('Звук'),
+      }),
+    );
+    spy.mockRestore();
+  });
 });

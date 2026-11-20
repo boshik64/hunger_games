@@ -11,19 +11,23 @@ function empty(): StatsFile {
 }
 
 export function countClick(name: string, screen: string): void {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined' || !name) return;
   const at = new Date().toISOString();
-  let data = empty();
   try {
-    const raw = localStorage.getItem(KEY);
-    if (raw) data = { ...empty(), ...JSON.parse(raw) };
+    let data = empty();
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (raw) data = { ...empty(), ...JSON.parse(raw) };
+    } catch {
+      data = empty();
+    }
+    data.counts[name] = (data.counts[name] ?? 0) + 1;
+    data.events.push({ name, screen, at });
+    if (data.events.length > LIMIT) data.events.splice(0, data.events.length - LIMIT);
+    localStorage.setItem(KEY, JSON.stringify(data));
   } catch {
-    data = empty();
+    // Private mode or a full quota must not drop the server report or the click itself.
   }
-  data.counts[name] = (data.counts[name] ?? 0) + 1;
-  data.events.push({ name, screen, at });
-  if (data.events.length > LIMIT) data.events.splice(0, data.events.length - LIMIT);
-  localStorage.setItem(KEY, JSON.stringify(data));
   void fetch('/api/stats', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },

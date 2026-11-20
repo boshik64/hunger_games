@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { countClick } from '../analytics/counters';
 import { themeAudioUrl } from '../config';
 import { ru } from '../content/ru';
+import { useGameStore } from '../game/store';
 import styles from '../app/shell.module.css';
 
 const STORAGE_KEY = 'kg:sound';
@@ -52,7 +54,9 @@ if (typeof window !== 'undefined') {
   );
 }
 
-export function SoundToggle() {
+export function SoundToggle({ screen }: { screen?: string }) {
+  const gameScreen = useGameStore((state) => state.screen);
+  const place = screen ?? gameScreen;
   const [on, setOn] = useState(soundWanted);
 
   return (
@@ -63,6 +67,7 @@ export function SoundToggle() {
       aria-pressed={on}
       aria-label={on ? ru.service.soundOn : ru.service.soundOff}
       onClick={() => {
+        countClick(on ? ru.service.soundOn : ru.service.soundOff, place);
         const audio = themeElement();
         if (on && audio && !isAudible(audio)) {
           resume(audio);

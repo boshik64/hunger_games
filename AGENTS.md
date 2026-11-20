@@ -2,7 +2,7 @@
 
 Промолендинг-мини-игра сети КАРО к фильму **«Голодные игры: Рассвет жатвы»**. Статический SPA без бэкенда и регистрации. Цель гостя: дистрикт → парад → навык → оценка спонсоров → предмет → стратегия → результат + шаринг карточки + CTA «Выбрать сеанс».
 
-Исходный бриф: `CURSOR_PROMPT_Hunger_Games_Landing.md` (часть пунктов устарела — ориентируйся на этот файл и `docs/`). Решения по неоднозначностям: `docs/DECISIONS.md`. Ассеты: `docs/ASSETS.md`. Чеклист: `docs/QA.md`.
+Исходный бриф: `CURSOR_PROMPT_Hunger_Games_Landing.md` (часть пунктов устарела — ориентируйся на этот файл и `docs/`). Решения по неоднозначностям: `docs/DECISIONS.md`. Ассеты: `docs/ASSETS.md`. Чеклист: `docs/QA.md`. Деплой: `docs/DEPLOY.md`.
 
 ## Стек
 
@@ -16,22 +16,22 @@
 
 ```bash
 pnpm dev
-pnpm build          # tsc --noEmit && vite build
-pnpm start          # dist + API розыгрыша → raffle-participants.json
+pnpm build # tsc --noEmit && vite build
+pnpm start # dist + API кликов/розыгрыша/stats → data/clicks.json, raffle-participants.json
 pnpm test
 pnpm run typecheck
 pnpm run lint
-pnpm run ci         # typecheck + lint + test
+pnpm run ci # typecheck + lint + test
 pnpm run check:assets
 ```
 
-Env (см. `.env.example`): `VITE_SITE_URL`, `VITE_TICKETS_URL`, `VITE_ANALYTICS_ID`, `VITE_ANALYTICS_DEBUG`.
+Env (см. `.env.example`): `VITE_SITE_URL`, `VITE_TICKETS_URL`, `VITE_ANALYTICS_ID`, `VITE_ANALYTICS_DEBUG`, `STATS_PASSWORD` (только сервер, страница `/stats`).
 
 ## Поток экранов
 
 Порядок игры жёсткий (шаги — только `state.screen`; отдельно публичный URL `/reward`):
 
-`draw → outfit → skill → score → item → strategy → result` (+ `/reward`)
+`draw → outfit → skill → score → item → strategy → result` (+ `/reward`, `/stats`)
 
 | Экран | Выбор | Ключевые действия стора |
 |---|---|---|
@@ -50,23 +50,33 @@ Env (см. `.env.example`): `VITE_SITE_URL`, `VITE_TICKETS_URL`, `VITE_ANALYTICS
 ## Структура `src/`
 
 ```
-app/         App, ScreenRouter, DistrictSpin, visualScreen
-screens/     Draw, Outfit, Skill, Score, Item, Strategy, Result
-components/  UI (shadcn), ChoiceGroup, ScreenFrame, ActionButton…
-content/     ru.ts (все тексты), results.ts, districts.ts
-game/        store, types, persistence, random, selectors
-card/        renderCard (canvas 1080×1920)
-analytics/   dataLayer + dedupe + activeTime + counters
-assets/      manifest.ts, fonts.ts
-share/       links
-styles/      tokens, global, fonts, motion
+app/ App, ScreenRouter, DistrictSpin, visualScreen
+screens/ Draw, Outfit, Skill, Score, Item, Strategy, Result, Reward, Stats
+components/ UI (shadcn), ChoiceGroup, ScreenFrame, ActionButton…
+content/ ru.ts (все тексты), results.ts, districts.ts
+game/ store, types, persistence, random, selectors
+card/ renderCard (canvas 1080×1920)
+analytics/ dataLayer + dedupe + activeTime + counters (countClick → /api/stats)
+stats/ api.ts (логин/дашборд), reportPdf.ts (PDF без журнала и участников)
+assets/ manifest.ts, fonts.ts
+share/ links
+styles/ tokens, global, fonts, motion
 ```
+
+Серверные скрипты: `scripts/stats.mjs` (`/api/stats*`), `scripts/raffle.mjs` (`/api/raffle*`), `scripts/serve.mjs` (`pnpm start`).
+
+## Клики и `/stats`
+
+- Все актуальные кнопки зовут `countClick(name, screen)` → `localStorage` `kg:stats:v1` + `POST /api/stats` → `data/clicks.json`.
+- `pnpm start` и Vite plugin принимают один и тот же handler из `scripts/stats.mjs`.
+- `/stats`: пароль `STATS_PASSWORD` + серверная капча → cookie-сессия 12 ч. `GET /api/stats` без сессии — 401; `POST` кликов открыт.
+- После входа: сводка, клики, журнал, участники `raffle-participants.json`. «Скачать PDF» — сводка + клики по кнопкам (без журнала и без таблицы участников).
 
 ## Жёсткие правила
 
 1. **Видимый текст только из `src/content/ru.ts`.** Дословные объяснения шести комбинаций — в `results.ts`. Не править копирайт «на глаз».
 2. **Ассеты только через `src/assets/manifest.ts`.** Замена слоя = файл + манифест + `pnpm run check:assets`. Подписи дистриктов пока плейсхолдеры (`isPlaceholder: true`).
-3. **Нет бэкенда.** Состояние — сессия браузера. Клики также пишутся в `data/clicks.json` (dev plugin) и `localStorage` `kg:stats:v1`.
+3. **Нет бэкенда приложения.** Состояние — сессия браузера. Node нужен для розыгрыша, кликов и `/stats`.
 4. **Mobile-first**, шаг в один экран без внутренней прокрутки кадра. Учитывать `prefers-reduced-motion`.
 5. Клик по карточке **не** меняет экран — только confirm-кнопка. Пока `isDrawing || isTransitioning` — guards в сторе блокируют действия.
 6. CTA «Выбрать сеанс» → `VITE_TICKETS_URL` (`src/config.ts`). Не блокировать во время жеребьёвки.

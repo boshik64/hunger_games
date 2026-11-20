@@ -3,6 +3,7 @@ import { readFileSync, statSync } from 'node:fs';
 import { extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { handleRaffleRequest } from './raffle.mjs';
+import { handleStatsRequest } from './stats.mjs';
 
 const root = join(fileURLToPath(new URL('.', import.meta.url)), '..');
 const dist = join(root, 'dist');
@@ -39,6 +40,7 @@ function sendFile(res, filePath) {
 }
 
 const server = createServer(async (req, res) => {
+  if (await handleStatsRequest(req, res)) return;
   if (await handleRaffleRequest(req, res)) return;
 
   const url = new URL(req.url ?? '/', `http://localhost:${port}`);

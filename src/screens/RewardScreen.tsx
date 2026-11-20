@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from 'cn';
+import { countClick } from '../analytics/counters';
 import { AssetImage } from '../components/AssetImage';
 import { SoundToggle } from '../components/SoundToggle';
 import { ru } from '../content/ru';
@@ -30,6 +31,7 @@ export function RewardScreen() {
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (status === 'submitting' || status === 'success') return;
+    countClick(ru.reward.submit, 'reward');
 
     const normalized = normalizeCode(code);
     if (!isValidCode(normalized)) {
@@ -75,10 +77,14 @@ export function RewardScreen() {
       />
       <div className={styles.scrim} aria-hidden="true" />
       <header className={styles.header}>
-        <Link className={styles.back} to="/">
+        <Link
+          className={styles.back}
+          to="/"
+          onClick={() => countClick(ru.reward.backToGame, 'reward')}
+        >
           {ru.reward.backToGame}
         </Link>
-        <SoundToggle />
+        <SoundToggle screen="reward" />
       </header>
       <main className={styles.main}>
         <h1 className={styles.title}>{ru.reward.title}</h1>
@@ -126,7 +132,14 @@ export function RewardScreen() {
               <span>{ru.reward.captchaLabel}</span>
               <span className={styles.captchaRow}>
                 <span className={styles.challenge}>{ru.reward.captchaHint(captcha.challenge)}</span>
-                <button type="button" className={styles.refresh} onClick={refreshCaptcha}>
+                <button
+                  type="button"
+                  className={styles.refresh}
+                  onClick={() => {
+                    countClick(ru.reward.captchaRefresh, 'reward');
+                    refreshCaptcha();
+                  }}
+                >
                   {ru.reward.captchaRefresh}
                 </button>
               </span>

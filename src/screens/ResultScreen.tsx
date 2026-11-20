@@ -185,7 +185,14 @@ export function ResultScreen() {
             }
             onClick={(event) => event.stopPropagation()}
           />
-          <button type="button" className={styles.lightboxClose} onClick={() => setCardOpen(false)}>
+          <button
+            type="button"
+            className={styles.lightboxClose}
+            onClick={() => {
+              countClick(ru.service.close, 'result');
+              setCardOpen(false);
+            }}
+          >
             {ru.service.close}
           </button>
         </div>
@@ -202,7 +209,14 @@ export function ResultScreen() {
             <p>{ru.service.share}</p>
             <ShareLink href={telegramShareUrl(shareText, page)}>{ru.share.telegram}</ShareLink>
             <ShareLink href={vkShareUrl(shareText, page, image)}>{ru.share.vk}</ShareLink>
-            <button type="button" className={styles.lightboxClose} onClick={() => setShareOpen(false)}>
+            <button
+              type="button"
+              className={styles.lightboxClose}
+              onClick={() => {
+                countClick(ru.service.close, 'result');
+                setShareOpen(false);
+              }}
+            >
               {ru.service.close}
             </button>
           </div>
