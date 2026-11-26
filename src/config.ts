@@ -1,5 +1,7 @@
 export const ticketsUrl = import.meta.env.VITE_TICKETS_URL || 'https://www.karofilm.ru/film/16396';
 export const siteUrl = import.meta.env.VITE_SITE_URL || 'https://golodnyeigry.karofilm.ru/';
+export const rewardRulesUrl =
+  'https://static.karofilm.ru/v3k/uploads/filemanager/offer/rules_tvoya_nagrada.pdf?_t=1795690184';
 export const rewardPath = '/reward';
 export const statsPath = '/stats';
 export const themeAudioUrl =

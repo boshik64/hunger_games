@@ -5,6 +5,7 @@ import { cn } from 'cn';
 import { countClick } from '../analytics/counters';
 import { AssetImage } from '../components/AssetImage';
 import { SoundToggle } from '../components/SoundToggle';
+import { rewardRulesUrl } from '../config';
 import { ru } from '../content/ru';
 import { submitRaffle, type RaffleError } from '../raffle/api';
 import { createLocalCaptcha } from '../raffle/captcha';
@@ -90,6 +91,14 @@ export function RewardScreen() {
         <h1 className={styles.title}>{ru.reward.title}</h1>
         <p className={styles.dates}>{ru.reward.dates}</p>
         <p className={styles.lead}>{ru.reward.lead}</p>
+        <a
+          className={styles.rules}
+          href={rewardRulesUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {ru.reward.rules}
+        </a>
         <p className={styles.hint}>{ru.reward.prompt}</p>
 
         <section className={styles.section} aria-labelledby="super-title">
